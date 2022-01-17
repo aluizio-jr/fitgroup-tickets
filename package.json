@@ -1,0 +1,23 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/aluizio-jr/fitgroup-tickets.git",
+  "author": "aluizio-jr <aluizio.fg@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsnd --transpile-only --respawn --ignore-watch node_modules src/server.ts"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.8",
+    "@types/uuid": "^8.3.4",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.4"
+  }
+}
