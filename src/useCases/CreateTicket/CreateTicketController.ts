@@ -9,8 +9,8 @@ export class CreateTicketController {
 
     async handle(request: Request, response: Response) {
         const data = request.body as ICreateTicketRequestDTO
-        this.createTicketUseCase.execute(data)
+        const newTicket = await this.createTicketUseCase.execute(data)
 
-        return response.send()
+        return response.json(newTicket)
     }
 }

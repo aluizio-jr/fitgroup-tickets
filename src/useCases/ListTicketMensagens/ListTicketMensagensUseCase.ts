@@ -17,10 +17,12 @@ export class ListTicketMensagensUseCase {
 
                 return {
                     ...ticket, 
-                    atendenteNome: atendente                    
+                    atendenteNome: atendente?atendente:null                   
                 }
             }))
        
+            return ticketInfo
+
         } catch (error) {
             throw error
         }

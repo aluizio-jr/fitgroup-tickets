@@ -6,5 +6,5 @@ export interface ITicketsRepository {
     getTipo(id_ticket: string): Promise<string>
     getSistema(id_ticket: string): Promise<string>
     getAtendente(id_ticket: string): Promise<string>
-    //save(): Promise<Ticket>
+    create(ticket: Ticket ): Promise<Ticket>
 }

@@ -52,7 +52,7 @@ Todos os endpoints da API recebem e respondem em JSON.
 Para que se considere a notificação como processada com sucesso, o status HTTP da resposta deve ser `200`.
 
 # CLIENTES
-## Recuperar dados de um cliente [GET /clientes/client_info.php]
+## Recuperar dados de um cliente [GET /customer/:id]
 
 Para recuperar um cliente específico é necessário que você tenha o seu ID.
 
@@ -70,39 +70,27 @@ Para recuperar um cliente específico é necessário que você tenha o seu ID.
 
     + Body
 
-            {
-                "object": "cliente",
-                "id": "1",
-                "name": "Academia Teste",
-                "companyName": "Dill Fitness Ltda",
-                "email": "academia.teste@gmail.com",
-                "mobilePhone": "31971636968",
-                "phone": "3141018508",
-                "address": "Av. Paulista",
-                "addressNumber": "150",
-                "complement": "Sala 201",
-                "province": "Centro",
-                "city": "São Paulo",
-                "state": "SP",
-                "postalCode": "01310000",
-                "country": "Brasil",
-                "observations": "ótimo pagador, nenhum problema até o momento"
-            }
+        {
+            "id_cliente": 1,
+            "nome_fantasia": "Fitgroup",
+            "email_geral": "contato@fitgroup.com.br",
+            "tel_fixo": "3134032606",
+            "tel_celular": "31987773609",
+            "contatos": "Aluízio",
+            "senha": null
+        }
 
-### Listar clientes [GET /clientes/clientes_list.php{?name,company_name,email,city,state}]
+### Listar todos os clientes [GET /customer{?nome,email}]
 Diferente da recuperação de um cliente específico, este método retorna
 uma lista com todos os clientes para os filtros informados.
 
-Filtrar por nome: `GET https://fitgroup.com.br/fitgroup_tickets/api/v1/clientes?name=Academia`
+Filtrar por nome: `GET https://fitgroup.com.br/fitgroup_tickets/api/v1/customer?name=Academia`
 
-Filtrar por email: `GET https://fitgroup.com.br/fitgroup_tickets/api/v1/clientes?name=acadeteste@gmail.com`
+Filtrar por email: `GET https://fitgroup.com.br/fitgroup_tickets/api/v1/customer?email=acadeteste@gmail.com`
 
 + Parameters
     + name (optional) - Filtrar por nome
     + email (optional) - Filtrar por email
-    + city (optional) - Filtrar por cidade
-    + state (optional) - Filtrar por estado
-    + contact (optional) - Filtrar por pessoa de contato
 
 + Request
 
@@ -111,106 +99,30 @@ Filtrar por email: `GET https://fitgroup.com.br/fitgroup_tickets/api/v1/clientes
 
 + Response 200 (application/json)
 
-        {
-            "object": "clientes_list",
-            "totalCount": 50,
-            "data": [
-                {
-                "object": "cliente",
-                "id": "1",
-                "name": "Academia Teste",
-                "companyName": "Dill Fitness Ltda",
-                "email": "academia.teste@gmail.com",
-                "mobilePhone": "31971636968",
-                "phone": "3141018508",
-                "address": "Av. Paulista",
-                "addressNumber": "150",
-                "complement": "Sala 201",
-                "province": "Centro",
-                "city": "São Paulo",
-                "state": "SP",
-                "postalCode": "01310000",
-                "country": "Brasil",
-                "observations": "ótimo pagador, nenhum problema até o momento"
-                },
-                {
-                "object": "cliente",
-                "id": "1005",
-                "name": "Nados Fitness",
-                "companyName": "MKL Atividades Fisicas Ltda",
-                "email": "nadosfit@gmail.com",
-                "mobilePhone": "31992064254",
-                "phone": "3121158878",
-                "address": "Rua Visconde de Taunay",
-                "addressNumber": "514,
-                "complement": "",
-                "province": "São João Batista",
-                "city": "Belo Horizonte",
-                "state": "MG",
-                "postalCode": "31525-020",
-                "country": "Brasil",
-                "observations": "just myself"   
-                }
-            ]
-        }
-
-### Atualizar cliente existente [POST /clientes/cliente_update.php]
-
-Permite atualizar as informações de um cliente já existente.
-
-+ Request (application/json)
-
-    + Headers
-        access_token: sua_api_key
-
-    + Attributes (ClienteUpd)
-
-
-    + Body
+    +Body
+        [
             {
-                "id": "1",
-                "email": "novo_email@gmail.com",
-                "phone": "4735515675",
-                "mobilePhone": "4799857841",
-                "postalCode": "01310-000",
-                "address": "Av. Paulista",
-                "addressNumber": "150",
-                "complement": "Sala 201",
-                "province": "Centro",
-                "city": "São Paulo",
-                "state": "SP",
-                "observations": "ótimo pagador, nenhum problema até o momento"
-            }
-
-
-+ Response 200 (application/json)
-
-
-    + Body
-
+                "id_cliente": 1,
+                "nome_fantasia": "Fitgroup",
+                "email_geral": "contato@fitgroup.com.br",
+                "tel_fixo": "3134032606",
+                "tel_celular": "31987773609",
+                "contatos": "Aluízio",
+                "senha": null
+            },
             {
-                "object": "cliente",
-                "id": "1",
-                "name": "Academia Teste",
-                "companyName": "Dill Fitness Ltda",
-                "email": "academia.teste@gmail.com",
-                "mobilePhone": "31971636968",
-                "phone": "3141018508",
-                "address": "Av. Paulista",
-                "addressNumber": "150",
-                "complement": "Sala 201",
-                "province": "Centro",
-                "city": "São Paulo",
-                "state": "SP",
-                "postalCode": "01310000",
-                "country": "Brasil",
-                "observations": "ótimo pagador, nenhum problema até o momento"
+                "id_cliente": 3,
+                "nome_fantasia": "Fênix Sport Center",
+                "email_geral": "inacioalmeida@yahoo.com.br",
+                "tel_fixo": "3133571135",
+                "tel_celular": "31993219754",
+                "contatos": "Inácio Almeida",
+                "senha": null
             }
+        ]
 
 
-
-
-## Cobranças [/payments]
+## Tickets [/ticket]
 
 Os status possíveis de uma cobrança são os seguintes:
 

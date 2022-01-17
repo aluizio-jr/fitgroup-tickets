@@ -1,5 +1,3 @@
-import mysql from 'mysql2/promise'
-
 export async function connect(){
     if(global.connection && global.connection.state !== 'disconnected')
         return global.connection;

@@ -6,7 +6,6 @@ export interface ICreateTicketRequestDTO {
     id_ticket_status: number;
     descricao: string;
     responsavel_cliente: string;
-    data_abertura: Date;
-    data_fechamento: Date;
-    data_exclusao: Date;
+    data_fechamento: string;
+    data_exclusao: string;
 }

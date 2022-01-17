@@ -4,25 +4,50 @@ import { ITicketsRepository } from "../ITicketsRepository";
 
 export class MysqlTicketRepository implements ITicketsRepository {
 
+    async create(ticket: Ticket): Promise<Ticket> {
+        const db = await connect()
+        let dbQuery = `INSERT INTO m_ticket (
+            m_ticket.id_ticket,
+            m_ticket.id_cliente,
+            m_ticket.id_ticket_tipo,
+            m_ticket.id_sistema,
+            m_ticket.id_ticket_atendente,
+            m_ticket.id_ticket_status,
+            m_ticket.data_abertura,
+            m_ticket.descricao,
+            m_ticket.responsavel_cliente
+            ) VALUES ( 
+            '${ticket.id_ticket}',
+            ${ticket.id_cliente},
+            ${ticket.id_ticket_tipo},
+            ${ticket.id_sistema || null},
+            ${ticket.id_ticket_atendente || null},
+            ${ticket.id_ticket_status},
+            '${ticket.data_abertura}',
+            '${ticket.descricao}',
+            '${ticket.responsavel_cliente || null}')`
+            
+        await db.query(dbQuery)        
+        return ticket
+    }
+
     async getTicket(id_ticket?: string): Promise<Ticket[]> {
         const db = await connect()
-        let dbQuery: string
+        let dbQuery = `SELECT
+            m_ticket.id_ticket,
+            m_ticket.id_cliente,
+            m_ticket.id_ticket_tipo,
+            m_ticket.id_sistema,
+            m_ticket.id_ticket_atendente,
+            m_ticket.id_ticket_status,
+            m_ticket.data_abertura,
+            m_ticket.descricao,
+            m_ticket.responsavel_cliente,
+            m_ticket.data_fechamento
+            FROM
+            m_ticket
+            ${id_ticket ? ` WHERE id_ticket = '${id_ticket}'` : ''}`
 
-        dbQuery = `SELECT
-        m_ticket.id_ticket,
-        m_ticket.id_cliente,
-        m_ticket.id_ticket_tipo,
-        m_ticket.id_sistema,
-        m_ticket.id_ticket_atendente,
-        m_ticket.id_ticket_status,
-        m_ticket.data_abertura,
-        m_ticket.descricao,
-        m_ticket.responsavel_cliente,
-        m_ticket.data_fechamento
-        FROM
-        m_ticket
-        ${id_ticket ? ` WHERE id_ticket = '${id_ticket}'` : ''}
-        `
         const [rows] = await db.query(dbQuery)        
         return rows
     }

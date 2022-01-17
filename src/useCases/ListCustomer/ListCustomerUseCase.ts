@@ -6,10 +6,10 @@ export class ListCustomerUseCase {
         private customerRepository: ICustomerRepository
     ) {}
 
-    async execute({id}: IListCustomerDTO) {
+    async execute({id_cliente}: IListCustomerDTO) {
         try {
-            if (id) {
-                const customer = await this.customerRepository.findById(id)
+            if (id_cliente) {
+                const customer = await this.customerRepository.findById(id_cliente)
                 return customer
             }
 

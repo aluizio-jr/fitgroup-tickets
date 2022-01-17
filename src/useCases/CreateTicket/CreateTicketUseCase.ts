@@ -12,22 +12,32 @@ export class CreateTicketUseCase {
     ) {}
 
     async execute(data: ICreateTicketRequestDTO) {
-        const customer = await this.customerRepository.findById(data.id_cliente)
-        const ticket = new Ticket(data);
+        
+        try {
+            if (!data.id_cliente) throw new Error('ID cliente obrigatório.')
+                        
+            const ticket = new Ticket(data);
 
-        //await this.ticketRepository.save(ticket);
+            const createdTicket = await this.ticketRepository.create(ticket);
+            return createdTicket
+            
+            //const customer = await this.customerRepository.findById(data.id_cliente)
 
-        this.mailProvider.sendMail({
-            to: {
-                name: customer.nome_fantasia,
-                email: customer.email_geral
-            },
-            from: {
-                name: 'Suporte Fitgroup',
-                email: 'suporte@fitgroup.com.br'
-            },
-            subject: 'Essa é uma mensagem de confirmacao',
-            body: '<p>Nova interação no seu Ticket</p>'
-        })
-    }
+            // this.mailProvider.sendMail({
+            //     to: {
+            //         name: customer.nome_fantasia,
+            //         email: customer.email_geral
+            //     },
+            //     from: {
+            //         name: 'Suporte Fitgroup',
+            //         email: 'suporte@fitgroup.com.br'
+            //     },
+            //     subject: 'Essa é uma mensagem de confirmacao',
+            //     body: '<p>Nova interação no seu Ticket</p>'
+            // })
+
+        } catch(error) {
+            return {erro: error.message }
+        }
+    } 
 }

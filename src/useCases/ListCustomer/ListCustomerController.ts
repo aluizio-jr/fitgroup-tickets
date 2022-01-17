@@ -10,7 +10,7 @@ export class ListCustomerController {
         const id = request.params.id
 
         try {
-            const res = await this.listCustomerUseCase.execute({ id: Number(id) })
+            const res = await this.listCustomerUseCase.execute({ id_cliente: Number(id) })
             return response.json(res)
 
         } catch(error) {

@@ -20,24 +20,24 @@ export class MysqlTicketMensagensRepository implements ITicketMensagensRepositor
         FROM
         m_ticket_mensagens
         WHERE
-        m_ticket_mensagens.id_ticket
-        WHERE id_ticket = '${id_ticket_mensagem}'
-        `
+        m_ticket_mensagens.id_ticket = '${id_ticket_mensagem}'`
+
         const [rows] = await db.query(dbQuery)        
         return rows
     }
 
     async getAtendente(id_ticket_mensagem: string): Promise<string> {
         const db = await connect()
-        const [rows] = await db.query(
-        `SELECT
+        let dbQuery: string
+        dbQuery = `SELECT
         c_ticket_atendentes.nome
         FROM
         m_ticket_mensagens
         INNER JOIN c_ticket_atendentes ON m_ticket_mensagens.id_ticket_atendente = c_ticket_atendentes.id_ticket_atendente
         WHERE
-        m_ticket_mensagens.id_ticket_mensagem = '${id_ticket_mensagem}'
-        `)        
+        m_ticket_mensagens.id_ticket_mensagem = '${id_ticket_mensagem}'`
+
+        const [rows] = await db.query(dbQuery)        
 
         return rows[0]?.nome
     }      
