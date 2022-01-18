@@ -5,6 +5,9 @@ import { CreateTicketController } from "./CreateTicketController";
 import { CreateTicketUseCase } from "./CreateTicketUseCase";
 
 const ticketRepository = new MysqlTicketRepository()
+// const ticketTiposEnum = new TicketTiposEnum()
+// const ticketStatusEnum = new TicketStatusEnum()
+
 const nodeMailerMailProvider = new NodeMailerMailProvider()
 const mysqlCustomerRepository = new MysqlCustomerRepository()
 const createTicketUseCase = new CreateTicketUseCase(ticketRepository, nodeMailerMailProvider, mysqlCustomerRepository)

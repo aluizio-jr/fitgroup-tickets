@@ -4,6 +4,33 @@ import { ITicketMensagensRepository } from "../ITicketMensagensRepository";
 
 export class MysqlTicketMensagensRepository implements ITicketMensagensRepository {
 
+    async create(ticketMensagem: TicketMensagens): Promise<TicketMensagens> {
+        const db = await connect()
+        let dbQuery = `INSERT INTO m_ticket_mensagens (
+            id_ticket_mensagem,
+            id_ticket,
+            data_hora,
+            id_ticket_atendente
+            responsavel_cliente,
+            interna,
+            mensagem,
+            lida,
+            excluida,
+            ) VALUES ( 
+            '${ticketMensagem.id_ticket_mensagem}',
+            '${ticketMensagem.id_ticket}',
+            '${ticketMensagem.data_hora}',
+            ${ticketMensagem.id_ticket_atendente || null},
+            '${ticketMensagem.responsavel_cliente || null}',
+            ${ticketMensagem.interna},
+            '${ticketMensagem.mensagem}',
+            ${ticketMensagem.lida},
+            ${ticketMensagem.excluida})`
+            
+        await db.query(dbQuery)        
+        return ticketMensagem
+    }
+
     async getTicketMensagens(id_ticket_mensagem?: string): Promise<TicketMensagens[]> {
         const db = await connect()
         let dbQuery: string

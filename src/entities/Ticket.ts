@@ -22,6 +22,7 @@ export class Ticket {
 
         if (!id_ticket) {
             this.id_ticket = uuid()
+            this.id_ticket_status = 1
         }
         
         this.data_abertura = getMySqlDate({ hasTime: true });
