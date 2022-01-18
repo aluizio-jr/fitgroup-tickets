@@ -10,12 +10,12 @@ export class MysqlTicketMensagensRepository implements ITicketMensagensRepositor
             id_ticket_mensagem,
             id_ticket,
             data_hora,
-            id_ticket_atendente
+            id_ticket_atendente,
             responsavel_cliente,
             interna,
             mensagem,
             lida,
-            excluida,
+            excluida
             ) VALUES ( 
             '${ticketMensagem.id_ticket_mensagem}',
             '${ticketMensagem.id_ticket}',
@@ -26,7 +26,19 @@ export class MysqlTicketMensagensRepository implements ITicketMensagensRepositor
             '${ticketMensagem.mensagem}',
             ${ticketMensagem.lida},
             ${ticketMensagem.excluida})`
-            
+        
+        await db.query(dbQuery)        
+        return ticketMensagem
+    }
+
+    async update(ticketMensagem: TicketMensagens): Promise<TicketMensagens> {
+        const db = await connect()
+        let dbQuery = `UPDATE m_ticket_mensagens SET
+            interna = ${ticketMensagem.interna},
+            lida = ${ticketMensagem.lida},
+            excluida =  ${ticketMensagem.excluida}
+            WHERE id_ticket_mensagem = '${ticketMensagem.id_ticket_mensagem}')`
+        
         await db.query(dbQuery)        
         return ticketMensagem
     }
