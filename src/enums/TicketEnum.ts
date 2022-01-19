@@ -1,11 +1,17 @@
 export enum TicketTiposEnum {
-    "Suporte" = 1,
-    "Financeiro" = 2,
+    SUPORTE = 1,
+    FINANCEIRO = 2,
 }
 
 export enum TicketStatusEnum {
-    "Sem Atendente" = 1,
-    "Aberto" = 2,
-    "Pausado" = 3,
-    "Fechado" = 4
+    SEM_ATENDENTE = 1,
+    ABERTO = 2,
+    PAUSADO = 3,
+    FECHADO = 4
+}
+
+export enum TicketSistemaEnum {
+    KOMONDOR = 1,
+    VYSOR = 2,
+    AVALIACAO = 3
 }

@@ -6,11 +6,14 @@ import { listTicketMensagensController } from "./useCases/ListTicketMensagens";
 import { createTicketMensagemController } from "./useCases/CreateTicketMensagem";
 import { updateTicketMensagemController } from "./useCases/UpdateTicketMensagem";
 import { listCustumerResponsaveisController } from "./useCases/ListCustomerResponsaveis";
+import { listSistemasController } from "./useCases/ListSistemas";
 
 const router = Router()
 
 router.get('/customer/:id?', (request, response) => listCustumerController.handle(request, response))
 router.get('/customer/:id?/responsaveis', (request, response) => listCustumerResponsaveisController.handle(request, response))
+
+router.get('/sistemas', (request, response) => listSistemasController.handle(request, response))
 
 router.get('/ticket/:id?', (request,response) => listTicketController.handle(request, response))
 router.post('/ticket/create', (request, response) => createTicketController.handle(request, response))

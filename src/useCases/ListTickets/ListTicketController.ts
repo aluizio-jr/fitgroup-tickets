@@ -8,12 +8,6 @@ export class ListTicketController {
 
     async handle(request: Request, response: Response) {
         const id_ticket = request.params.id;
-        //const nomeResponsabel = request.query.nomeResponsavel as string
-        
-        //const query = request.query
-        //query.responsavel
-
-        //const { nomeResponsavel } = request.query as string
 
         try {
             const res = await this.listTicketUseCase.execute({ id_ticket })

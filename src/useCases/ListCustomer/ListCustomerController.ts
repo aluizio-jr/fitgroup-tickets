@@ -14,7 +14,6 @@ export class ListCustomerController {
             return response.json(res)
 
         } catch(error) {
-            console.log('fuck')
             return response.status(400).json(error)
         }
     }

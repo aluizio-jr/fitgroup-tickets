@@ -25,8 +25,8 @@ export class CreateTicketUseCase {
             if (!data.responsavel_cliente && !data.id_ticket_atendente) throw new Error('É preciso informar o responsável pela abertura do Ticket: Responsável cliente ou Atendente Fitgroup.')
             if (!data.id_ticket_tipo)  throw new Error('ID tipo de ticket obrigatório.')
             if (!data.descricao) throw new Error('Título do ticket obrigatório.')
-            if (data.id_ticket_tipo === TicketTiposEnum.Suporte && !data.id_sistema) throw new Error('Sistema obrigatório para o tipo de ticket Suporte.')
-            if (data.id_ticket_status === TicketStatusEnum.Fechado) data.data_fechamento = getMySqlDate({hasTime: true})
+            if (data.id_ticket_tipo === TicketTiposEnum.SUPORTE && !data.id_sistema) throw new Error('Sistema obrigatório para o tipo de ticket Suporte.')
+            if (data.id_ticket_status === TicketStatusEnum.FECHADO) data.data_fechamento = getMySqlDate({hasTime: true})
 
             const ticket = new Ticket(data);
 
