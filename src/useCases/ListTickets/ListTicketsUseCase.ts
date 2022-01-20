@@ -12,9 +12,9 @@ export class ListTicketUseCase {
 
     ) {}
 
-    async execute({id_ticket}: IListTicketDTO) {
+    async execute(ticketParams: IListTicketDTO) {
         try {
-            const tickets = await this.ticketRepository.getTicket(id_ticket)
+            const tickets = await this.ticketRepository.getTicket(ticketParams)
             const ticketInfo: TicketInfo[] = await Promise.all(tickets.map(async ticket => {
                 const customer = await this.customerRepository.findById(ticket.id_cliente)
                 const status = await this.ticketRepository.getStatus(ticket.id_ticket)

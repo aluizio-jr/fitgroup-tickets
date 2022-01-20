@@ -4,6 +4,7 @@ import { Customer } from "../../entities/Customer";
 import { ICustomerRepository } from "../ICustomerRepository";
 
 export class MysqlCustomerRepository implements ICustomerRepository {
+
     async findById(id: number): Promise<Customer> {
         const db = await connect()
         const [rows] = await db.query (
@@ -19,6 +20,19 @@ export class MysqlCustomerRepository implements ICustomerRepository {
             )
         return rows?rows[0] : null;
     
+    }
+
+    async findByEmail(email: string): Promise<Customer> {
+        const db = await connect()
+        const [rows] = await db.query (
+            `SELECT 
+            id_cliente,
+            email_geral,
+            senha 
+            FROM c_clientes WHERE c_clientes.email_geral = '${email}'`
+            )
+        return rows?rows[0] : null;
+
     }
 
     async getAll(): Promise<Customer[]> {

@@ -5,9 +5,10 @@
     "allowJs": true,
     "esModuleInterop": true,                            
     "forceConsistentCasingInFileNames": true,             
-    "skipLibCheck": true                                
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts"
-  ]
+, "src/repositories/ITicketAtendentesRepository.ts"  ]
 }

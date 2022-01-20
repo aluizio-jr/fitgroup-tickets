@@ -124,15 +124,17 @@ Filtrar por email: `GET https://fitgroup.com.br/fitgroup_tickets/api/v1/customer
 
 ### Criar novo Ticket [POST /ticket/create]
 
-O Ticket pode ser criado pelo cliente ou por uma atendente fitgroup.
+O Ticket pode ser criado pelo cliente ou por uma atendente fitgroup. Isso dependerá do tipo de usuário que estiver logado.
+
 - Ticket criado pelo cliente: 
     - enviar campo 'responsavel_cliente' com o nome do solicitante
     - enviar campo 'id_atendente_fitgroup' como null
+
 - Ticket criado por atendente Fitgroup
     - enviar campo 'id_atendente_fitgroup' como o ID do atentende logado
     - enviar campo 'responsavel_cliente como null
 
-+ Enums (dados padronizadis para campos de tickets)
++ Enums (dados padronizados para campos de tickets)
 
     - Tipo de ticket:
     `SUPORTE`
@@ -143,7 +145,45 @@ O Ticket pode ser criado pelo cliente ou por uma atendente fitgroup.
     `ABERTO`
     `PAUSADO`
     `FECHADO`
+
     
+
++ Endpoints para busca de dados necessários para a criação do ticket
+
+    Sistemas: [GET /sistemas] 
+        (lista os sistemas para tickets do tipo `SUPORTE`
+
+        [
+            {
+                "id_sistema": "1",
+                "nome": "Komondor"
+            },
+            {
+                "id_sistema": "2",
+                "nome": "Vysor"
+            },
+            {
+                "id_sistema": "6",
+                "nome": "Avaliação Física"
+            },
+            {
+                "id_sistema": "7",
+                "nome": "Vysor Pay"
+            },
+            {
+                "id_sistema": "9",
+                "nome": "Controle de Acesso"
+            }
+        ]
+
+    - Responsáveis cliente: [GET /customer/{id_cliente}/responsaveis]
+        (lista as pessoas que já abriram ou interagiram com tickets do cliente
+
+        [
+            "Paola",
+            "Amanda"
+        ]
+
 + Request (application/json)
 
     + Headers

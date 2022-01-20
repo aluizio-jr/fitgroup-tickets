@@ -7,10 +7,26 @@ export class ListTicketController {
     ) {}
 
     async handle(request: Request, response: Response) {
-        const id_ticket = request.params.id;
+        const {
+            id_ticket,
+            id_cliente,
+            id_ticket_status,
+            id_ticket_tipo,
+            id_sistema,
+            id_ticket_atendente,
+            responsavel_cliente
+         } = request.query;
 
         try {
-            const res = await this.listTicketUseCase.execute({ id_ticket })
+            const res = await this.listTicketUseCase.execute({
+                id_ticket: id_ticket ? String(id_ticket) : '',
+                id_cliente: Number(id_cliente),
+                id_ticket_status: Number(id_ticket_status),
+                id_ticket_tipo: Number(id_ticket_tipo),
+                id_sistema: Number(id_sistema),
+                id_ticket_atendente: Number(id_ticket_atendente),
+                responsavel_cliente: responsavel_cliente ? String(responsavel_cliente) : ''                
+            })
             return response.json(res)
 
         } catch(error) {
