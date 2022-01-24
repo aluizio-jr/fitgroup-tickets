@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import { ListTicketUseCase } from "./ListTicketsUseCase";
+import { TicketStatusEnum } from "../../enums/TicketEnum"
+import { TicketTiposEnum } from "../../enums/TicketEnum"
+import { TicketSistemaEnum } from "../../enums/TicketEnum"
 
 export class ListTicketController {
     constructor (
@@ -21,9 +24,9 @@ export class ListTicketController {
             const res = await this.listTicketUseCase.execute({
                 id_ticket: id_ticket ? String(id_ticket) : '',
                 id_cliente: Number(id_cliente),
-                id_ticket_status: Number(id_ticket_status),
-                id_ticket_tipo: Number(id_ticket_tipo),
-                id_sistema: Number(id_sistema),
+                id_ticket_status: TicketStatusEnum[String(id_ticket_status)],
+                id_ticket_tipo: TicketTiposEnum[String(id_ticket_tipo)],
+                id_sistema: TicketSistemaEnum[String(id_sistema)],
                 id_ticket_atendente: Number(id_ticket_atendente),
                 responsavel_cliente: responsavel_cliente ? String(responsavel_cliente) : ''                
             })

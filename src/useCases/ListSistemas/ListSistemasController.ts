@@ -6,8 +6,7 @@ export class ListSistemasController {
         private listSistemasUseCase: ListSistemasUseCase
     ) {}
 
-    async handle(request, response: Response) {
-
+    async handle(request: Request, response: Response) {
         try {
             const res = await this.listSistemasUseCase.execute()
             return response.json(res)

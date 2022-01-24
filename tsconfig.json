@@ -3,10 +3,15 @@
     "target": "es2017",                                 
     "module": "commonjs",                               
     "allowJs": true,
+    "rootDir": "./src",
     "esModuleInterop": true,                            
     "forceConsistentCasingInFileNames": true,             
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "src/@types",
+      "./node_modules/@types"
+    ],
   },
   "include": [
     "src/**/*.ts"

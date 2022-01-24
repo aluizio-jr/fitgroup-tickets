@@ -26,7 +26,7 @@ export class MysqlTicketRepository implements ITicketsRepository {
             ${ticket.id_ticket_status},
             '${ticket.data_abertura}',
             '${ticket.descricao}',
-            '${ticket.responsavel_cliente || null}')`
+            ${ticket.responsavel_cliente ? `'${ticket.responsavel_cliente}'` :  null})`
             
         await db.query(dbQuery)        
         return ticket

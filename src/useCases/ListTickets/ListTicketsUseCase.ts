@@ -12,7 +12,7 @@ export class ListTicketUseCase {
 
     ) {}
 
-    async execute(ticketParams: IListTicketDTO) {
+    async execute(ticketParams: IListTicketDTO) { 
         try {
             const tickets = await this.ticketRepository.getTicket(ticketParams)
             const ticketInfo: TicketInfo[] = await Promise.all(tickets.map(async ticket => {

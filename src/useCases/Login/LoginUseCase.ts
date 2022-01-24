@@ -26,6 +26,12 @@ export class LoginUseCase {
                 }, process.env.JWT_SECRET)
 
                 return token
+
+            } else {
+                return {
+                    "error": "Login falhou.",
+                    "description": "Senha inválida!"
+                }
             }
         }
 
@@ -40,9 +46,20 @@ export class LoginUseCase {
                 }, process.env.JWT_SECRET)
 
                 return token
+            
+            } else {
+                return {
+                    "error": "Login falhou",
+                    "description": "Senha inválida!"
+                }
             }
         }
-    
+        
+        return {
+            "error": "Login falhou",
+            "description": "Usuário não encontrado."
+        }
+
     }
 
 }    

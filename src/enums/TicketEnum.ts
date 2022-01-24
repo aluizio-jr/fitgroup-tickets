@@ -1,6 +1,6 @@
 export enum TicketTiposEnum {
     SUPORTE = 1,
-    FINANCEIRO = 2,
+    FINANCEIRO = 2
 }
 
 export enum TicketStatusEnum {
@@ -13,5 +13,7 @@ export enum TicketStatusEnum {
 export enum TicketSistemaEnum {
     KOMONDOR = 1,
     VYSOR = 2,
-    AVALIACAO = 3
+    AVALIACAO = 6,
+    VYSOR_PAY = 7,
+    ACESSO = 9
 }

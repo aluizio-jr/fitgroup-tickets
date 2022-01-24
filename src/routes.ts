@@ -11,21 +11,23 @@ import { listCustumerResponsaveisController } from "./useCases/ListCustomerRespo
 import { listSistemasController } from "./useCases/ListSistemas";
 import { loginController } from "./useCases/Login";
 
+import auth from "./middlewares/auth"
+
 const router = Router()
 
 router.post('/login', (request, response) => loginController.handle(request, response))
 
-router.get('/customer/:id?', (request, response) => listCustumerController.handle(request, response))
-router.get('/customer/:id?/responsaveis', (request, response) => listCustumerResponsaveisController.handle(request, response))
+router.get('/customer/:id?', auth, (request, response) => listCustumerController.handle(request, response))
+router.get('/customer/:id?/responsaveis', auth, (request, response) => listCustumerResponsaveisController.handle(request, response))
 
-router.get('/sistemas', (request, response) => listSistemasController.handle(request, response))
+router.get('/sistemas', auth, (request, response) => listSistemasController.handle(request, response))
 
-router.get('/ticket', (request,response) => listTicketController.handle(request, response))
-router.post('/ticket/create', (request, response) => createTicketController.handle(request, response))
+router.get('/ticket', auth, (request,response) => listTicketController.handle(request, response))
+router.post('/ticket/create', auth, (request, response) => createTicketController.handle(request, response))
 
-router.get('/ticket/:id/mensagens', (request, response) => listTicketMensagensController.handle(request, response))
-router.post('/ticket/mensagem/create', (request, response) => createTicketMensagemController.handle(request, response))
-router.post('/ticket/mensagem/update', (request, response) => updateTicketMensagemController.handle(request, response))
+router.get('/ticket/:id/mensagens', auth, (request, response) => listTicketMensagensController.handle(request, response))
+router.post('/ticket/mensagem/create', auth, (request, response) => createTicketMensagemController.handle(request, response))
+router.post('/ticket/mensagem/update', auth, (request, response) => updateTicketMensagemController.handle(request, response))
 
 //router.get('/jwt', async (request, response) => response.send(await bcrypt.hash('suporte',10)) )
 export { router }
