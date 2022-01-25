@@ -12,4 +12,5 @@ export interface ICreateTicketRequestDTO {
     id_sistema?: keyof typeof TicketSistemaEnum;
     id_ticket_status: keyof typeof TicketStatusEnum;
     descricao: string;
+    data_abertura: string;
 }

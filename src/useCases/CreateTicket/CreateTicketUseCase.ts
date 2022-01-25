@@ -3,8 +3,7 @@ import { IMailProvider } from "../../providers/IMailProvider";
 import { ICustomerRepository } from "../../repositories/ICustomerRepository";
 import { ITicketsRepository } from "../../repositories/ITicketsRepository";
 import { ICreateTicketRequestDTO } from "./CreateTicketDTO";
-import { TicketSistemaEnum, TicketTiposEnum } from "../../enums/TicketEnum";
-import { TicketStatusEnum } from "../../enums/TicketEnum";
+import { TicketSistemaEnum, TicketTiposEnum, TicketStatusEnum } from "../../enums/TicketEnum";
 
 export class CreateTicketUseCase {
     constructor(

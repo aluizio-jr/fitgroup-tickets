@@ -9,6 +9,7 @@ export class MysqlTicketAtendentesRepository implements ITicketAtendentesReposit
         const [rows] = await db.query (
             `SELECT 
             id_ticket_atendente,
+            nome,
             email,
             senha 
             FROM c_ticket_atendentes 

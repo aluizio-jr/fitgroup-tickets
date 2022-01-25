@@ -25,7 +25,11 @@ export class LoginUseCase {
                     userType: UserTypeEnum.CLIENTE
                 }, process.env.JWT_SECRET)
 
-                return token
+                return {
+                    "usuarioTipo": "cliente",
+                    "usuarioNome": customer.nome_fantasia,
+                    "token": token
+                }
 
             } else {
                 return {
@@ -45,7 +49,11 @@ export class LoginUseCase {
                     userType: UserTypeEnum.FITGROUP
                 }, process.env.JWT_SECRET)
 
-                return token
+                return {
+                    "usuarioTipo": "fitgroup",
+                    "usuarioNome": ticketAtendentes.nome,
+                    "token": token
+                }
             
             } else {
                 return {
