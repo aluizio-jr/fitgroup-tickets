@@ -9,26 +9,30 @@ export class MysqlTicketRepository implements ITicketsRepository {
         const db = await connect()
         let dbQuery = `INSERT INTO m_ticket (
             m_ticket.id_ticket,
+            m_ticket.id_descritivo,
             m_ticket.id_cliente,
             m_ticket.id_ticket_tipo,
             m_ticket.id_sistema,
             m_ticket.id_ticket_atendente,
             m_ticket.id_ticket_status,
             m_ticket.data_abertura,
-            m_ticket.descricao,
+            m_ticket.titulo,
             m_ticket.responsavel_cliente
             ) VALUES ( 
             '${ticket.id_ticket}',
+            '${ticket.id_descritivo}',
             ${ticket.id_cliente},
             ${ticket.id_ticket_tipo},
             ${ticket.id_sistema || null},
             ${ticket.id_ticket_atendente || null},
             ${ticket.id_ticket_status},
             '${ticket.data_abertura}',
-            '${ticket.descricao}',
+            '${ticket.titulo}',
             ${ticket.responsavel_cliente ? `'${ticket.responsavel_cliente}'` :  null})`
             
-        await db.query(dbQuery)        
+        await db.query(dbQuery)  
+        
+        
         return ticket
     }
 
@@ -38,13 +42,14 @@ export class MysqlTicketRepository implements ITicketsRepository {
         let dbQuery: string 
         dbQuery = `SELECT
             m_ticket.id_ticket,
+            m_ticket.id_descritivo,
             m_ticket.id_cliente,
             m_ticket.id_ticket_tipo,
             m_ticket.id_sistema,
             m_ticket.id_ticket_atendente,
             m_ticket.id_ticket_status,
             m_ticket.data_abertura,
-            m_ticket.descricao,
+            m_ticket.titulo,
             m_ticket.responsavel_cliente,
             m_ticket.data_fechamento
             FROM

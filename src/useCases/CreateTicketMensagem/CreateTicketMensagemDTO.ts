@@ -1,10 +1,10 @@
 export interface ICreateTicketMensagemRequestDTO {
     id_ticket: string;
-    data_hora: string;
-    id_ticket_atendente: number;
-    responsavel_cliente: string;
-    interna: number;
+    data_hora?: string;
+    id_ticket_atendente?: number;
+    responsavel_cliente?: string;
+    interna?: number;
     mensagem: string;
-    lida: number;
-    excluida: number;
+    lida?: number;
+    excluida?: number;
 }

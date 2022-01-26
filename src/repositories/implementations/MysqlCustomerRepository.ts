@@ -27,6 +27,7 @@ export class MysqlCustomerRepository implements ICustomerRepository {
         const [rows] = await db.query (
             `SELECT 
             id_cliente,
+            nome_fantasia,
             email_geral,
             senha 
             FROM c_clientes WHERE c_clientes.email_geral = '${email}'`

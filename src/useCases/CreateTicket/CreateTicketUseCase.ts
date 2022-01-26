@@ -4,12 +4,17 @@ import { ICustomerRepository } from "../../repositories/ICustomerRepository";
 import { ITicketsRepository } from "../../repositories/ITicketsRepository";
 import { ICreateTicketRequestDTO } from "./CreateTicketDTO";
 import { TicketSistemaEnum, TicketTiposEnum, TicketStatusEnum } from "../../enums/TicketEnum";
+import { TicketMensagens } from "../../entities/TicketMensagens"
+
+import { ICreateTicketMensagemRequestDTO } from "../../useCases/CreateTicketMensagem/CreateTicketMensagemDTO"
+import { ITicketMensagensRepository } from "../../repositories/ITicketMensagensRepository";
 
 export class CreateTicketUseCase {
     constructor(
         private ticketRepository: ITicketsRepository,
         private mailProvider: IMailProvider,
         private customerRepository: ICustomerRepository,
+        private ticketMensagemRepository: ITicketMensagensRepository
     ) {}
 
     async execute(data: ICreateTicketRequestDTO) {
@@ -37,7 +42,7 @@ export class CreateTicketUseCase {
             if (!ticketInfo.id_ticket_tipo)  throw new Error('ID tipo de ticket obrigatório.')
  
             if (TicketTiposEnum[ticketInfo.id_ticket_tipo] === TicketTiposEnum.SUPORTE && !ticketInfo.id_sistema) throw new Error('Sistema obrigatório para o tipo de ticket Suporte.')
-            if (!ticketInfo.descricao) throw new Error('Título do ticket obrigatório.')            
+            if (!ticketInfo.titulo) throw new Error('Título do ticket obrigatório.')            
             //if (TicketStatusEnum[String(ticketInfo.id_ticket_status)] === TicketStatusEnum.FECHADO) ticketInfo.ticketInfo_fechamento = getMySqlDate({hasTime: true})
             const idSistema = TicketTiposEnum[ticketInfo.id_ticket_tipo] === TicketTiposEnum.FINANCEIRO ? null : TicketSistemaEnum[ticketInfo.id_sistema]
             
@@ -52,8 +57,19 @@ export class CreateTicketUseCase {
             });
 
             const newTicket = await this.ticketRepository.create(ticket);
-            return newTicket
+            
+            const mensagemData: ICreateTicketMensagemRequestDTO = {
+                id_ticket: newTicket.id_ticket,
+                mensagem: data.mensagem,
+                id_ticket_atendente: newTicket.id_ticket_atendente || null,
+                responsavel_cliente: newTicket.responsavel_cliente || null,
+            }
 
+            const ticketMensagem = new TicketMensagens(mensagemData)
+            
+            const newTicketMensagem = await this.ticketMensagemRepository.create(ticketMensagem)
+
+            return newTicket
             //const customer = await this.customerRepository.findById(ticketInfo.id_cliente)
 
             // this.mailProvider.sendMail({

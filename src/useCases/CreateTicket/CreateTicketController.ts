@@ -15,7 +15,8 @@ export class CreateTicketController {
             id_ticket_tipo,
             id_sistema,
             id_ticket_status,
-            descricao,
+            titulo,
+            mensagem,
             data_abertura
         } = request.body 
 
@@ -25,10 +26,12 @@ export class CreateTicketController {
             id_ticket_tipo,
             id_sistema,
             id_ticket_status,
-            descricao,
+            titulo,
+            mensagem,
             id_responsavel: user,
             tipo_usuario: userType,
-            data_abertura:  getMySqlDate({ hasTime: true })
+            data_abertura:  getMySqlDate({ hasTime: true 
+            })
 
         })
 

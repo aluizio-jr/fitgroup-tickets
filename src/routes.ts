@@ -12,6 +12,7 @@ import { listSistemasController } from "./useCases/ListSistemas";
 import { loginController } from "./useCases/Login";
 
 import auth from "./middlewares/auth"
+import { listTicketTipoController } from "./useCases/ListTicketTipos";
 
 const router = Router()
 
@@ -20,6 +21,7 @@ router.post('/login', (request, response) => loginController.handle(request, res
 router.get('/customer/:id?', auth, (request, response) => listCustumerController.handle(request, response))
 router.get('/customer/:id?/responsaveis', auth, (request, response) => listCustumerResponsaveisController.handle(request, response))
 
+router.get('/ticket_tipos', (request,response) => listTicketTipoController.handle(request, response) )
 router.get('/sistemas', auth, (request, response) => listSistemasController.handle(request, response))
 
 router.get('/ticket', auth, (request,response) => listTicketController.handle(request, response))

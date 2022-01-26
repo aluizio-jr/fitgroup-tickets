@@ -6,15 +6,15 @@ export class TicketMensagens {
 
     public id_ticket: string;
     public data_hora: string;
-    public id_ticket_atendente: number;
-    public responsavel_cliente: string;
-    public interna: number;
+    public id_ticket_atendente?: number;
+    public responsavel_cliente?: string;
+    public interna?: number;
     public mensagem: string;
-    public lida: number;
-    public excluida: number;
+    public lida?: number;
+    public excluida?: number;
 
 
-    constructor(props: Omit<TicketMensagens,'id_ticket_mensagem'>, id_ticket_mensagem?: string) {
+    constructor(props: Omit<TicketMensagens,'id_ticket_mensagem' | 'data_hora'>, id_ticket_mensagem?: string) {
         // this.name = props.name;
         // this.email = props.email;
         Object.assign(this, props);
