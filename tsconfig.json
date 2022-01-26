@@ -3,11 +3,17 @@
     "target": "es2017",                                 
     "module": "commonjs",                               
     "allowJs": true,
+    "rootDir": "./src",
     "esModuleInterop": true,                            
     "forceConsistentCasingInFileNames": true,             
-    "skipLibCheck": true                                
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "src/@types",
+      "./node_modules/@types"
+    ],
   },
   "include": [
     "src/**/*.ts"
-  ]
+, "src/repositories/ITicketAtendentesRepository.ts"  ]
 }

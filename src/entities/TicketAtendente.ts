@@ -1,4 +1,6 @@
 export class TicketAtendente {
     id_ticket_atendente: number;
-    nome: string
+    nome: string;
+    email: string;
+    senha: string;
 }

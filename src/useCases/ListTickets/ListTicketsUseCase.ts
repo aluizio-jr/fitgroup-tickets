@@ -12,9 +12,17 @@ export class ListTicketUseCase {
 
     ) {}
 
-    async execute({id_ticket}: IListTicketDTO) {
+    async execute(ticketParams: IListTicketDTO) { 
+        const{ id_responsavel, tipo_usuario, ...ticketFilters } = ticketParams
+
         try {
-            const tickets = await this.ticketRepository.getTicket(id_ticket)
+            const idCliente = tipo_usuario === "cliente" ? id_responsavel : ticketFilters.id_cliente
+            
+            const tickets = await this.ticketRepository.getTicket({
+                ...ticketFilters,
+                id_cliente: idCliente
+            })
+
             const ticketInfo: TicketInfo[] = await Promise.all(tickets.map(async ticket => {
                 const customer = await this.customerRepository.findById(ticket.id_cliente)
                 const status = await this.ticketRepository.getStatus(ticket.id_ticket)
@@ -35,7 +43,7 @@ export class ListTicketUseCase {
             return ticketInfo
 
         } catch (error) {
-            throw error
+            return {erro: error.message }
         }
     }
 }

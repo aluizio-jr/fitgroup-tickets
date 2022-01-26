@@ -122,66 +122,81 @@ Filtrar por email: `GET https://fitgroup.com.br/fitgroup_tickets/api/v1/customer
         ]
 
 
-## Tickets [/ticket]
+### Criar novo Ticket [POST /ticket/create]
 
-Os status possíveis de uma cobrança são os seguintes:
+O Ticket pode ser criado pelo cliente ou por uma atendente fitgroup. Isso dependerá do tipo de usuário que estiver logado.
 
-`PENDING` - Aguardando pagamento
+- Ticket criado pelo cliente: 
+    - enviar campo 'responsavel_cliente' com o nome do solicitante
+    - enviar campo 'id_atendente_fitgroup' como null
 
-`RECEIVED` - Recebida (saldo já creditado na conta)
+- Ticket criado por atendente Fitgroup
+    - enviar campo 'id_atendente_fitgroup' como o ID do atentende logado
+    - enviar campo 'responsavel_cliente como null
 
-`CONFIRMED` - Pagamento confirmado (saldo ainda não creditado)
++ Enums (dados padronizados para campos de tickets)
 
-`OVERDUE` - Vencida
+    - Tipo de ticket:
+    `SUPORTE`
+    `FINANCEIRO`
 
-`REFUNDED` - Estornada
+    - Status do ticket
+    `SEM_ATENDENTE`
+    `ABERTO`
+    `PAUSADO`
+    `FECHADO`
 
-`RECEIVED_IN_CASH` - Recebida em dinheiro (não gera saldo na conta)
+    
 
-`REFUND_REQUESTED` - Estorno Solicitado
++ Endpoints para busca de dados necessários para a criação do ticket
 
-`CHARGEBACK_REQUESTED` - Recebido chargeback
+    Sistemas: [GET /sistemas] 
+        (lista os sistemas para tickets do tipo `SUPORTE`
 
-`CHARGEBACK_DISPUTE` - Em disputa de chargeback (caso sejam apresentados documentos para contestação)
+        [
+            {
+                "id_sistema": "1",
+                "nome": "Komondor"
+            },
+            {
+                "id_sistema": "2",
+                "nome": "Vysor"
+            },
+            {
+                "id_sistema": "6",
+                "nome": "Avaliação Física"
+            },
+            {
+                "id_sistema": "7",
+                "nome": "Vysor Pay"
+            },
+            {
+                "id_sistema": "9",
+                "nome": "Controle de Acesso"
+            }
+        ]
 
-`AWAITING_CHARGEBACK_REVERSAL` - Disputa vencida, aguardando repasse da adquirente
+    - Responsáveis cliente: [GET /customer/{id_cliente}/responsaveis]
+        (lista as pessoas que já abriram ou interagiram com tickets do cliente
 
-`DUNNING_REQUESTED` - Em processo de recuperação
-
-`DUNNING_RECEIVED` - Recuperada
-
-`AWAITING_RISK_ANALYSIS` - Pagamento em análise
-
-### Criar nova cobrança [POST]
-
-Cria uma nova cobrança. É possível escolher entre as formas de pagamento com boleto, cartão de crédito, Pix ou permitir que o cliente escolha a forma que desejar.
+        [
+            "Paola",
+            "Amanda"
+        ]
 
 + Request (application/json)
 
     + Headers
         access_token: sua_api_key
 
-    + Attributes (NewPayment)
-
     + Body
             {
-                "customer": "{CUSTOMER_ID}",
-                "billingType": "BOLETO",
-                "dueDate": "2017-06-10",
-                "value": 100.00,
-                "description": "Pedido 056984",
-                "externalReference": "056984",
-                "discount": {
-                    "value": 10.00,
-                    "dueDateLimitDays": 0
-                },
-                "fine": {
-                    "value": 1.00
-                },
-                "interest": {
-                    "value": 2.00
-                },
-                "postalService": false
+                "id_cliente": "{CUSTOMER_ID}",
+                "id_ticket_tipo": "BOLETO",
+                "id_sistema": "2017-06-10",
+                "id_ticket_atendente": 100.00,
+                "responsavel_cliente": "Pedido 056984",
+                "descricao": "056984"
             }
 
 

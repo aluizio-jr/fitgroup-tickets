@@ -1,5 +1,6 @@
 import { connect } from "../../db";
 import { Ticket } from "../../entities/Ticket";
+import { IListTicketDTO } from "../../useCases/ListTickets/ListTicketDTO";
 import { ITicketsRepository } from "../ITicketsRepository";
 
 export class MysqlTicketRepository implements ITicketsRepository {
@@ -8,45 +9,60 @@ export class MysqlTicketRepository implements ITicketsRepository {
         const db = await connect()
         let dbQuery = `INSERT INTO m_ticket (
             m_ticket.id_ticket,
+            m_ticket.id_descritivo,
             m_ticket.id_cliente,
             m_ticket.id_ticket_tipo,
             m_ticket.id_sistema,
             m_ticket.id_ticket_atendente,
             m_ticket.id_ticket_status,
             m_ticket.data_abertura,
-            m_ticket.descricao,
+            m_ticket.titulo,
             m_ticket.responsavel_cliente
             ) VALUES ( 
             '${ticket.id_ticket}',
+            '${ticket.id_descritivo}',
             ${ticket.id_cliente},
             ${ticket.id_ticket_tipo},
             ${ticket.id_sistema || null},
             ${ticket.id_ticket_atendente || null},
             ${ticket.id_ticket_status},
             '${ticket.data_abertura}',
-            '${ticket.descricao}',
-            '${ticket.responsavel_cliente || null}')`
+            '${ticket.titulo}',
+            ${ticket.responsavel_cliente ? `'${ticket.responsavel_cliente}'` :  null})`
             
-        await db.query(dbQuery)        
+        await db.query(dbQuery)  
+        
+        
         return ticket
     }
 
-    async getTicket(id_ticket?: string): Promise<Ticket[]> {
+    async getTicket(ticketParams: IListTicketDTO): Promise<Ticket[]> {
         const db = await connect()
-        let dbQuery = `SELECT
+
+        let dbQuery: string 
+        dbQuery = `SELECT
             m_ticket.id_ticket,
+            m_ticket.id_descritivo,
             m_ticket.id_cliente,
             m_ticket.id_ticket_tipo,
             m_ticket.id_sistema,
             m_ticket.id_ticket_atendente,
             m_ticket.id_ticket_status,
             m_ticket.data_abertura,
-            m_ticket.descricao,
+            m_ticket.titulo,
             m_ticket.responsavel_cliente,
             m_ticket.data_fechamento
             FROM
             m_ticket
-            ${id_ticket ? ` WHERE id_ticket = '${id_ticket}'` : ''}`
+            WHERE id_ticket IS NOT NULL
+            ${ticketParams.id_ticket ? ` AND id_ticket = '${ticketParams.id_ticket}'` : ''}
+            ${ticketParams.id_cliente ? ` AND id_cliente = ${ticketParams.id_cliente}` : ''}
+            ${ticketParams.id_ticket_status ? ` AND id_ticket_status = ${ticketParams.id_ticket_status}` : ''}
+            ${ticketParams.id_ticket_tipo ? ` AND id_ticket_tipo = ${ticketParams.id_ticket_tipo}` : ''}
+            ${ticketParams.id_sistema ? ` AND id_sistema = ${ticketParams.id_sistema}` : ''}
+            ${ticketParams.id_ticket_atendente ? ` AND id_ticket_atendente = ${ticketParams.id_ticket_atendente}` : ''}
+            ${ticketParams.responsavel_cliente ? ` AND responsavel_cliente = '${ticketParams.responsavel_cliente}'` : ''}
+            `
 
         const [rows] = await db.query(dbQuery)        
         return rows

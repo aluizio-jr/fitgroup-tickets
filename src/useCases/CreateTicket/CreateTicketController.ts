@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { ICreateTicketRequestDTO } from "./CreateTicketDTO";
 import { CreateTicketUseCase } from "./CreateTicketUseCase";
+import { getMySqlDate } from "../../utils/date"
 
 export class CreateTicketController {
     constructor (
@@ -8,8 +8,32 @@ export class CreateTicketController {
     ) {}
 
     async handle(request: Request, response: Response) {
-        const data = request.body as ICreateTicketRequestDTO
-        const newTicket = await this.createTicketUseCase.execute(data)
+        const { user, userType } = request
+        const {
+            id_cliente,
+            responsavel_cliente,
+            id_ticket_tipo,
+            id_sistema,
+            id_ticket_status,
+            titulo,
+            mensagem,
+            data_abertura
+        } = request.body 
+
+        const newTicket = await this.createTicketUseCase.execute({
+            id_cliente,
+            responsavel_cliente,
+            id_ticket_tipo,
+            id_sistema,
+            id_ticket_status,
+            titulo,
+            mensagem,
+            id_responsavel: user,
+            tipo_usuario: userType,
+            data_abertura:  getMySqlDate({ hasTime: true 
+            })
+
+        })
 
         return response.json(newTicket)
     }
