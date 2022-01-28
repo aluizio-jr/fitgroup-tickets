@@ -42,10 +42,12 @@ export class CreateTicketUseCase {
             if (!ticketInfo.id_ticket_tipo)  throw new Error('ID tipo de ticket obrigatório.')
  
             if (TicketTiposEnum[ticketInfo.id_ticket_tipo] === TicketTiposEnum.SUPORTE && !ticketInfo.id_sistema) throw new Error('Sistema obrigatório para o tipo de ticket Suporte.')
-            if (!ticketInfo.titulo) throw new Error('Título do ticket obrigatório.')            
-            //if (TicketStatusEnum[String(ticketInfo.id_ticket_status)] === TicketStatusEnum.FECHADO) ticketInfo.ticketInfo_fechamento = getMySqlDate({hasTime: true})
-            const idSistema = TicketTiposEnum[ticketInfo.id_ticket_tipo] === TicketTiposEnum.FINANCEIRO ? null : TicketSistemaEnum[ticketInfo.id_sistema]
+            if (!ticketInfo.titulo) throw new Error('Título do ticket obrigatório.')
+            if (tipo_usuario === "fitgroup" && !ticketInfo.id_cliente) throw new Error('Cliente não informado.')
             
+            const isFinan = TicketTiposEnum[ticketInfo.id_ticket_tipo] === TicketTiposEnum.FINANCEIRO
+            const idSistema = isFinan ? null : ticketInfo.id_sistema ? TicketSistemaEnum[ticketInfo.id_sistema] : null
+
             const ticket = new Ticket({
                 ...ticketInfo,
                 id_cliente: tipo_usuario === "fitgroup" ? ticketInfo.id_cliente : id_responsavel,
@@ -57,15 +59,13 @@ export class CreateTicketUseCase {
             });
 
             const newTicket = await this.ticketRepository.create(ticket);
-            
-            const mensagemData: ICreateTicketMensagemRequestDTO = {
+
+            const ticketMensagem = new TicketMensagens({
                 id_ticket: newTicket.id_ticket,
                 mensagem: data.mensagem,
                 id_ticket_atendente: newTicket.id_ticket_atendente || null,
                 responsavel_cliente: newTicket.responsavel_cliente || null,
-            }
-
-            const ticketMensagem = new TicketMensagens(mensagemData)
+            })
             
             const newTicketMensagem = await this.ticketMensagemRepository.create(ticketMensagem)
 
@@ -85,7 +85,7 @@ export class CreateTicketUseCase {
             //     body: '<p>Nova interação no seu Ticket</p>'
             // })
 
-        } catch(error) {
+        } catch(error: any) {
             return {erro: error.message }
         }
     } 

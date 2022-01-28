@@ -13,6 +13,7 @@ import { loginController } from "./useCases/Login";
 
 import auth from "./middlewares/auth"
 import { listTicketTipoController } from "./useCases/ListTicketTipos";
+import { listAtendentesController } from "./useCases/ListAtendentes";
 
 const router = Router()
 
@@ -31,5 +32,6 @@ router.get('/ticket/:id/mensagens', auth, (request, response) => listTicketMensa
 router.post('/ticket/mensagem/create', auth, (request, response) => createTicketMensagemController.handle(request, response))
 router.post('/ticket/mensagem/update', auth, (request, response) => updateTicketMensagemController.handle(request, response))
 
+router.get('atendentes',(request, response) => listAtendentesController.handle(request, response))
 //router.get('/jwt', async (request, response) => response.send(await bcrypt.hash('suporte',10)) )
 export { router }

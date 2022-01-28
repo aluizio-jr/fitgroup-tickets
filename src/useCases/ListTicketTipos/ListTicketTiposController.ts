@@ -11,7 +11,7 @@ export class ListTicketTiposController {
             const res = await this.listTicketTiposUseCase.execute()
             return response.json(res)
 
-        } catch(error) {
+        } catch(error: any) {
             console.log(error.message)
             return response.status(400).json(error)
         }

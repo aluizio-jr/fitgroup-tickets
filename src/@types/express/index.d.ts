@@ -1,8 +1,10 @@
 import {IUserTypes } from "../../@types/userTypes"
 
-declare namespace Express {
-    export interface Request {
-        user: number;
-        userType: IUserTypes
+declare global {
+    namespace Express {
+        interface Request {
+            user: number;
+            userType: IUserTypes
+        }
     }
 }

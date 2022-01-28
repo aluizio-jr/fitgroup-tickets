@@ -18,4 +18,18 @@ export class MysqlTicketAtendentesRepository implements ITicketAtendentesReposit
         return rows?rows[0] : null;
 
     }
+
+    async getAll(): Promise<TicketAtendente> {
+        const db = await connect()
+        const [rows] = await db.query (
+            `SELECT 
+            id_ticket_atendente,
+            nome,
+            email,
+            senha 
+            FROM c_ticket_atendentes`
+            )
+        return rows;
+
+    }    
 }

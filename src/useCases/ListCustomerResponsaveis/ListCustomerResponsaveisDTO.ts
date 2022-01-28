@@ -1,3 +1,3 @@
 export interface IListCustomerResponsaveisDTO {
-    id_cliente: number | null
+    id_cliente: number
 }

@@ -4,8 +4,8 @@ export interface IUpdateTicketMensagemRequestDTO {
     data_hora: string;
     id_ticket_atendente: number;
     responsavel_cliente: string;
-    interna: number;
+    interna?: number;
     mensagem: string;
-    lida: number;
-    excluida: number;
+    lida?: number;
+    excluida?: number;
 }

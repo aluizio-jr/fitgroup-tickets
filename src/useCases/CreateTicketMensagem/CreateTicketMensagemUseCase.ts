@@ -37,7 +37,7 @@ export class CreateTicketMensagemUseCase {
             //     body: '<p>Nova interação no seu Ticket</p>'
             // })
 
-        } catch(error) {
+        } catch(error: any) {
             return {erro: error.message }
         }
     } 

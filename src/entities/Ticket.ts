@@ -8,11 +8,11 @@ import { TicketSistemaEnum } from "../enums/TicketEnum"
 export class Ticket {
     public readonly id_ticket: string;
 
-    public id_cliente: number;
+    public id_cliente?: number;
     public id_descritivo?: string;
-    public id_ticket_atendente?: number;
+    public id_ticket_atendente: number | null;
     public id_ticket_tipo: number;
-    public id_sistema?: number;
+    public id_sistema: number | null;
     public id_ticket_status: number;
     public titulo: string;
     public responsavel_cliente?: string;

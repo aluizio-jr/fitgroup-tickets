@@ -13,7 +13,7 @@ export class ListTicketMensagensController {
             const res = await this.listTicketMensagensUseCase.execute({ id_ticket_mensagem })
             return response.json(res)
 
-        } catch(error) {
+        } catch(error: any) {
             console.log(error.message)
             return response.status(400).json(error)
         }

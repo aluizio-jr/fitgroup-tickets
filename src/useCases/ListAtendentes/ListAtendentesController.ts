@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { ListSistemasUseCase } from "./ListSistemasUseCase";
+import { ListAtendentesUseCase } from "./ListAtendentesUseCase";
 
-export class ListSistemasController {
+export class ListAtendentesController {
     constructor (
-        private listSistemasUseCase: ListSistemasUseCase
+        private listAtendentesUseCase: ListAtendentesUseCase
     ) {}
 
     async handle(request: Request, response: Response) {
         try {
-            const res = await this.listSistemasUseCase.execute()
+            const res = await this.listAtendentesUseCase.execute()
             return response.json(res)
 
         } catch(error: any) {

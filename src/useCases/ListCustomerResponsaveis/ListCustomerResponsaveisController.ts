@@ -13,7 +13,7 @@ export class ListCustomerResponsaveisController {
             const res = await this.listCustomerResponsaveisUseCase.execute({ id_cliente: Number(id) })
             return response.json(res)
 
-        } catch(error) {
+        } catch(error: any) {
             return response.status(400).json(error)
         }
     }

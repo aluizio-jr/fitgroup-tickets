@@ -6,8 +6,8 @@ export class TicketMensagens {
 
     public id_ticket: string;
     public data_hora: string;
-    public id_ticket_atendente?: number;
-    public responsavel_cliente?: string;
+    public id_ticket_atendente: number | null;
+    public responsavel_cliente: string | null;
     public interna?: number;
     public mensagem: string;
     public lida?: number;
@@ -19,7 +19,7 @@ export class TicketMensagens {
         // this.email = props.email;
         Object.assign(this, props);
 
-        if (!this.id_ticket_mensagem) this.id_ticket_mensagem = uuid()
+        if (!id_ticket_mensagem) this.id_ticket_mensagem = uuid()
         if (!this.interna) this.interna = 0
         if (!this.lida) this.lida = 0
         if (!this.excluida) this.excluida = 0
