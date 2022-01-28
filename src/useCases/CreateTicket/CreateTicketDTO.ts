@@ -8,10 +8,9 @@ export interface ICreateTicketRequestDTO {
     id_responsavel: number;
     tipo_usuario: IUserTypes;
     responsavel_cliente?: string;
-    id_ticket_tipo: keyof typeof TicketTiposEnum;
-    id_sistema?: keyof typeof TicketSistemaEnum;
-    id_ticket_status: keyof typeof TicketStatusEnum;
+    id_ticket_tipo: number;
+    id_sistema: number | null;
+    id_ticket_status: number;
     titulo: string;
-    data_abertura: string;
     mensagem: string;
 }
