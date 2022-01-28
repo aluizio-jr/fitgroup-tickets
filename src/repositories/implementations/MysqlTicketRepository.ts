@@ -29,7 +29,7 @@ export class MysqlTicketRepository implements ITicketsRepository {
             '${ticket.data_abertura}',
             '${ticket.titulo}',
             ${ticket.responsavel_cliente ? `'${ticket.responsavel_cliente}'` :  null})`
-            
+        
         await db.query(dbQuery)  
         
         

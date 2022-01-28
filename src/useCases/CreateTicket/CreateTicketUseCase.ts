@@ -6,8 +6,6 @@ import { ITicketsRepository } from "../../repositories/ITicketsRepository";
 import { ICreateTicketRequestDTO } from "./CreateTicketDTO";
 import { TicketTiposEnum, TicketStatusEnum } from "../../enums/TicketEnum";
 import { TicketMensagens } from "../../entities/TicketMensagens"
-
-import { ICreateTicketMensagemRequestDTO } from "../../useCases/CreateTicketMensagem/CreateTicketMensagemDTO"
 import { ITicketMensagensRepository } from "../../repositories/ITicketMensagensRepository";
 
 export class CreateTicketUseCase {
@@ -58,7 +56,7 @@ export class CreateTicketUseCase {
             const ticketMensagem = new TicketMensagens({
                 id_ticket: newTicket.id_ticket,
                 mensagem: data.mensagem,
-                id_ticket_atendente: newTicket.id_ticket_atendente || null,
+                id_ticket_atendente:  newTicket.id_ticket_atendente || null,
                 responsavel_cliente: newTicket.responsavel_cliente || null,
             })
             

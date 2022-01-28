@@ -10,14 +10,19 @@ export class CreateTicketMensagemUseCase {
     ) {}
 
     async execute(data: ICreateTicketMensagemRequestDTO) {
-        
         try {
-            if (!data.id_ticket) throw new Error('ID do ticket obrigatório.')
-            if (!data.responsavel_cliente && !data.id_ticket_atendente) throw new Error('É preciso informar o responsável pela mensagem do Ticket: Responsável cliente ou Atendente Fitgroup.')
-            if (data.responsavel_cliente && data.id_ticket_atendente) throw new Error('A mensagem do Ticket deve ter apenas um responsável: Responsável cliente ou Atendente Fitgroup.')
+            const{ id_responsavel, tipo_usuario, ...mensagemData } = data
+
+            if (!mensagemData.id_ticket) throw new Error('ID do ticket obrigatório.')
+            if (tipo_usuario === "cliente" && !mensagemData.responsavel_cliente) throw new Error('Informe o responsável pela mensagem do Ticket.')
+            if (tipo_usuario === "fitgroup" && !id_responsavel) throw new Error('ID do atendente não informado. Possível erro de autenticação')
             if (!data.mensagem) throw new Error('Mensagem obrigatória.')
 
-            const ticketMensagem = new TicketMensagens(data);
+            const ticketMensagem = new TicketMensagens({
+                ...mensagemData,
+                id_ticket_atendente: tipo_usuario === "fitgroup" ? id_responsavel : null,
+                responsavel_cliente: tipo_usuario === "cliente" ? mensagemData.responsavel_cliente : null
+            });
 
             const newTicketMensagem = await this.ticketMensagemRepository.create(ticketMensagem);
             return newTicketMensagem

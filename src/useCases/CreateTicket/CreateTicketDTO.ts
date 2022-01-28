@@ -1,6 +1,3 @@
-import { TicketStatusEnum } from "../../enums/TicketEnum"
-import { TicketTiposEnum } from "../../enums/TicketEnum"
-import { TicketSistemaEnum } from "../../enums/TicketEnum"
 import { IUserTypes } from "../../@types/userTypes"
 
 export interface ICreateTicketRequestDTO {
