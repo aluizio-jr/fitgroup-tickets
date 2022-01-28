@@ -16,8 +16,7 @@ export class CreateTicketController {
             id_sistema,
             id_ticket_status,
             titulo,
-            mensagem,
-            data_abertura
+            mensagem
         } = request.body 
 
         const newTicket = await this.createTicketUseCase.execute({
@@ -30,9 +29,7 @@ export class CreateTicketController {
             mensagem,
             id_responsavel: user,
             tipo_usuario: userType,
-            data_abertura:  getMySqlDate({ hasTime: true 
-            })
-
+            data_abertura:  getMySqlDate({ hasTime: true })
         })
 
         return response.json(newTicket)
