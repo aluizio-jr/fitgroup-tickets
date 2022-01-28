@@ -1,0 +1,15 @@
+{
+    "apps": [
+        {
+            "name": "fg-tickets-server",
+            "exec_mode": "cluster",
+            "instances": "max",
+            "script": "./src/server.ts",
+            "interpreter": "ts-node",
+            "env": {
+                "ENV": "prod",
+                "PORT": 3333
+            }
+        }
+    ]
+}
