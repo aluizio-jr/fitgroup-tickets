@@ -1,8 +1,8 @@
 import { connect } from "../../db";
 import { TicketAtendente } from "../../entities/TicketAtendente";
-import { ITicketAtendentesRepository } from "../ITicketAtendentesRepository";
+import { IAtendentesRepository } from "../IAtendentesRepository";
 
-export class MysqlTicketAtendentesRepository implements ITicketAtendentesRepository {
+export class MysqlAtendentesRepository implements IAtendentesRepository {
 
     async findByEmail(email: string): Promise<TicketAtendente> {
         const db = await connect()
@@ -25,8 +25,7 @@ export class MysqlTicketAtendentesRepository implements ITicketAtendentesReposit
             `SELECT 
             id_ticket_atendente,
             nome,
-            email,
-            senha 
+            email
             FROM c_ticket_atendentes`
             )
         return rows;

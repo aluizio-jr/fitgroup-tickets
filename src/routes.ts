@@ -22,7 +22,7 @@ router.post('/login', (request, response) => loginController.handle(request, res
 router.get('/customer/:id?', auth, (request, response) => listCustumerController.handle(request, response))
 router.get('/customer/:id?/responsaveis', auth, (request, response) => listCustumerResponsaveisController.handle(request, response))
 
-router.get('/ticket_tipos', (request,response) => listTicketTipoController.handle(request, response) )
+router.get('/ticket_tipos',auth, (request,response) => listTicketTipoController.handle(request, response) )
 router.get('/sistemas', auth, (request, response) => listSistemasController.handle(request, response))
 
 router.get('/ticket', auth, (request,response) => listTicketController.handle(request, response))
@@ -32,6 +32,6 @@ router.get('/ticket/:id/mensagens', auth, (request, response) => listTicketMensa
 router.post('/ticket/mensagem/create', auth, (request, response) => createTicketMensagemController.handle(request, response))
 router.post('/ticket/mensagem/update', auth, (request, response) => updateTicketMensagemController.handle(request, response))
 
-router.get('atendentes',(request, response) => listAtendentesController.handle(request, response))
+router.get('/atendentes', (request, response) => listAtendentesController.handle(request, response))
 //router.get('/jwt', async (request, response) => response.send(await bcrypt.hash('suporte',10)) )
 export { router }

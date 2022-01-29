@@ -16,7 +16,7 @@ export class CreateTicketMensagemUseCase {
             if (!mensagemData.id_ticket) throw new Error('ID do ticket obrigatório.')
             if (tipo_usuario === "cliente" && !mensagemData.responsavel_cliente) throw new Error('Informe o responsável pela mensagem do Ticket.')
             if (tipo_usuario === "fitgroup" && !id_responsavel) throw new Error('ID do atendente não informado. Possível erro de autenticação')
-            if (!data.mensagem) throw new Error('Mensagem obrigatória.')
+            if (!mensagemData.mensagem) throw new Error('Mensagem obrigatória.')
 
             const ticketMensagem = new TicketMensagens({
                 ...mensagemData,

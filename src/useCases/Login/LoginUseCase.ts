@@ -3,13 +3,13 @@ import jwt from "jsonwebtoken"
 
 import { UserTypeEnum } from "../../enums/UserTypeEnum";
 import { ICustomerRepository } from "../../repositories/ICustomerRepository"
-import { ITicketAtendentesRepository } from "../../repositories/ITicketAtendentesRepository"
+import { IAtendentesRepository } from "../../repositories/IAtendentesRepository"
 import { ILogingDTO } from "./LoginDTO";
 
 export class LoginUseCase {
     constructor (
         private customerRepository: ICustomerRepository,
-        private ticketAtendentesRepository: ITicketAtendentesRepository
+        private ticketAtendentesRepository: IAtendentesRepository
     ) {}
 
     async execute (loginDtO: ILogingDTO) {

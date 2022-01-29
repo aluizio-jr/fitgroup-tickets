@@ -1,9 +1,9 @@
-import { ITicketAtendentesRepository } from "../../repositories/ITicketAtendentesRepository";
+import { IAtendentesRepository } from "../../repositories/IAtendentesRepository";
 import { IListAtendentesDTO } from "./ListAtendentesDTO";
 
 export class ListAtendentesUseCase {
     constructor(
-        private atendentesRepository: ITicketAtendentesRepository
+        private atendentesRepository: IAtendentesRepository
     ) {}
 
     async execute(): Promise<IListAtendentesDTO> {
