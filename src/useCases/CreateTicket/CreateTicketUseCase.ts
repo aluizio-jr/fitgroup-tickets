@@ -5,8 +5,8 @@ import { ICustomerRepository } from "../../repositories/ICustomerRepository";
 import { ITicketsRepository } from "../../repositories/ITicketsRepository";
 import { ICreateTicketRequestDTO } from "./CreateTicketDTO";
 import { TicketTiposEnum, TicketStatusEnum } from "../../enums/TicketEnum";
-import { TicketMensagens } from "../../entities/TicketMensagens"
-import { ITicketMensagensRepository } from "../../repositories/ITicketMensagensRepository";
+import { TicketMensagens } from "../../entities/Mensagens"
+import { ITicketMensagensRepository } from "../../repositories/IMensagensRepository";
 
 export class CreateTicketUseCase {
     constructor(

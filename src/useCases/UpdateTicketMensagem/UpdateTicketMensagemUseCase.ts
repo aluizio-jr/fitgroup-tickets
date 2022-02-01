@@ -1,6 +1,6 @@
-import { TicketMensagens } from "../../entities/TicketMensagens";
+import { TicketMensagens } from "../../entities/Mensagens";
 import { IUpdateTicketMensagemRequestDTO } from "./UpdateTicketMensagemDTO";
-import { ITicketMensagensRepository } from "../../repositories/ITicketMensagensRepository";
+import { ITicketMensagensRepository } from "../../repositories/IMensagensRepository";
 
 export class UpdateTicketMensagemUseCase {
     constructor(

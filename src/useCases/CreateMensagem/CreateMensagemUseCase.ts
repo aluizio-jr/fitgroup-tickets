@@ -1,6 +1,6 @@
-import { TicketMensagens } from "../../entities/TicketMensagens";
-import { ICreateTicketMensagemRequestDTO } from "./CreateTicketMensagemDTO";
-import { ITicketMensagensRepository } from "../../repositories/ITicketMensagensRepository";
+import { TicketMensagens } from "../../entities/Mensagens";
+import { ICreateTicketMensagemRequestDTO } from "./CreateMensagemDTO";
+import { ITicketMensagensRepository } from "../../repositories/IMensagensRepository";
 import { IMailProvider } from "../../providers/IMailProvider";
 
 export class CreateTicketMensagemUseCase {

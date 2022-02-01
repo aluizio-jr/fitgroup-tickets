@@ -1,8 +1,8 @@
-import { MysqlTicketMensagensRepository } from "../../repositories/implementations/MysqlTicketMensagensRepository";
+import { MysqlMensagensRepository } from "../../repositories/implementations/MysqlMensagensRepository";
 import { UpdateTicketMensagemController } from "./UpdateTicketMensagemController";
 import { UpdateTicketMensagemUseCase } from "./UpdateTicketMensagemUseCase";
 
-const ticketMensagemRepository = new MysqlTicketMensagensRepository()
+const ticketMensagemRepository = new MysqlMensagensRepository()
 const updateTicketMensagemUseCase = new UpdateTicketMensagemUseCase(ticketMensagemRepository)
 const updateTicketMensagemController = new UpdateTicketMensagemController(updateTicketMensagemUseCase)
 
