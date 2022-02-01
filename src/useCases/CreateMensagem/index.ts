@@ -1,10 +1,10 @@
 import { NodeMailerMailProvider } from "../../providers/implementations/NodeMailerMailProvider";
-import { MysqlTicketMensagensRepository } from "../../repositories/implementations/MysqlTicketMensagensRepository";
-import { CreateTicketMensagemController } from "./CreateTicketMensagemController";
-import { CreateTicketMensagemUseCase } from "./CreateTicketMensagemUseCase";
+import { MysqlMensagensRepository } from "../../repositories/implementations/MysqlMensagensRepository";
+import { CreateTicketMensagemController } from "./CreateMensagemController";
+import { CreateTicketMensagemUseCase } from "./CreateMensagemUseCase";
 
 const nodeMailerMailProvider = new NodeMailerMailProvider()
-const ticketMensagemRepository = new MysqlTicketMensagensRepository()
+const ticketMensagemRepository = new MysqlMensagensRepository()
 const createTicketMensagemUseCase = new CreateTicketMensagemUseCase(ticketMensagemRepository, nodeMailerMailProvider)
 const createTicketMensagemController = new CreateTicketMensagemController(createTicketMensagemUseCase)
 

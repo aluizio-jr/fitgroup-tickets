@@ -1,9 +1,9 @@
-import { MysqlTicketAtendentesRepository } from "../../repositories/implementations/MysqlTicketAtendentesRepository";
+import { MysqlAtendentesRepository } from "../../repositories/implementations/MysqlAtendentesRepository";
 import { ListAtendentesController } from "./ListAtendentesController";
 import { ListAtendentesUseCase} from "./ListAtendentesUseCase";
 
-const mysqlSistemasRepository = new MysqlTicketAtendentesRepository()
-const listAtendentesUseCase = new ListAtendentesUseCase(mysqlSistemasRepository)
+const mysqlAtendentesRepository = new MysqlAtendentesRepository()
+const listAtendentesUseCase = new ListAtendentesUseCase(mysqlAtendentesRepository)
 const listAtendentesController = new ListAtendentesController(listAtendentesUseCase)
 
 export { listAtendentesController }

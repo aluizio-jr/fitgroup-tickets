@@ -1,8 +1,8 @@
 import { connect } from "../../db";
-import { TicketMensagens } from "../../entities/TicketMensagens";
-import { ITicketMensagensRepository } from "../ITicketMensagensRepository";
+import { TicketMensagens } from "../../entities/Mensagens";
+import { ITicketMensagensRepository } from "../IMensagensRepository";
 
-export class MysqlTicketMensagensRepository implements ITicketMensagensRepository {
+export class MysqlMensagensRepository implements ITicketMensagensRepository {
 
     async create(ticketMensagem: TicketMensagens): Promise<TicketMensagens> {
         const db = await connect()
@@ -43,7 +43,7 @@ export class MysqlTicketMensagensRepository implements ITicketMensagensRepositor
         return ticketMensagem
     }
 
-    async getTicketMensagens(id_ticket_mensagem?: string): Promise<TicketMensagens[]> {
+    async getTicketMensagens(id_ticket?: string): Promise<TicketMensagens[]> {
         const db = await connect()
         let dbQuery: string
 
@@ -59,7 +59,8 @@ export class MysqlTicketMensagensRepository implements ITicketMensagensRepositor
         FROM
         m_ticket_mensagens
         WHERE
-        m_ticket_mensagens.id_ticket = '${id_ticket_mensagem}'`
+        m_ticket_mensagens.id_ticket = '${id_ticket}'
+        ORDER BY m_ticket_mensagens.data_hora`
 
         const [rows] = await db.query(dbQuery)        
         return rows

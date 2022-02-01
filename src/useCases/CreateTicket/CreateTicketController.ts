@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { CreateTicketUseCase } from "./CreateTicketUseCase";
-import { getMySqlDate } from "../../utils/date"
 
 export class CreateTicketController {
     constructor (
@@ -28,8 +27,7 @@ export class CreateTicketController {
             titulo,
             mensagem,
             id_responsavel: user,
-            tipo_usuario: userType,
-            data_abertura:  getMySqlDate({ hasTime: true })
+            tipo_usuario: userType
         })
 
         return response.json(newTicket)

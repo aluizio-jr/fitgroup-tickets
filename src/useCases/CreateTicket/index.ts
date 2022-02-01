@@ -3,10 +3,10 @@ import { MysqlCustomerRepository } from "../../repositories/implementations/Mysq
 import { MysqlTicketRepository } from "../../repositories/implementations/MysqlTicketRepository";
 import { CreateTicketController } from "./CreateTicketController";
 import { CreateTicketUseCase } from "./CreateTicketUseCase";
-import { MysqlTicketMensagensRepository } from "../../repositories/implementations/MysqlTicketMensagensRepository"
+import { MysqlMensagensRepository } from "../../repositories/implementations/MysqlMensagensRepository"
 
 const ticketRepository = new MysqlTicketRepository()
-const ticketMensagensRepository = new MysqlTicketMensagensRepository()
+const ticketMensagensRepository = new MysqlMensagensRepository()
 
 const nodeMailerMailProvider = new NodeMailerMailProvider()
 const mysqlCustomerRepository = new MysqlCustomerRepository()

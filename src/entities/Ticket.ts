@@ -32,8 +32,8 @@ export class Ticket {
         if (!id_descritivo) {
             this.id_descritivo = this.responsavel_cliente ? 'CL-' : 'FG-' 
             this.id_descritivo += this.id_ticket.substring(0,3) + '-'
-            this.id_descritivo += TicketTiposEnum[this.id_ticket_tipo].substring(0,3)
-            if (this.id_sistema) this.id_descritivo += '-' + TicketSistemaEnum[this.id_sistema].substring(0,3)
+            this.id_descritivo += String(TicketTiposEnum[this.id_ticket_tipo]).substring(0,3)
+            if (this.id_sistema) this.id_descritivo += '-' + String(TicketSistemaEnum[this.id_sistema]).substring(0,3)
             this.id_descritivo.toUpperCase()
         }
     }
