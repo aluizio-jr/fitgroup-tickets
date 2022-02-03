@@ -19,55 +19,40 @@ export class LoginUseCase {
         if (customer) {
             const isValidPwd = await bcrypt.compare(loginDtO.senha, customer.senha)
             
-            if (isValidPwd) {
-                const token = jwt.sign({
-                    id: customer.id_cliente,
-                    userType: UserTypeEnum.CLIENTE
-                }, process.env.JWT_SECRET)
+            if (!isValidPwd) throw new Error("Senha inválida!")
+            
+            const token = jwt.sign({
+                id: customer.id_cliente,
+                userType: UserTypeEnum.CLIENTE
+            }, String(process.env.JWT_SECRET))
 
-                return {
-                    "usuarioTipo": "cliente",
-                    "usuarioNome": customer.nome_fantasia,
-                    "token": token
-                }
-
-            } else {
-                return {
-                    "error": "Login falhou.",
-                    "description": "Senha inválida!"
-                }
+            return {
+                "usuarioTipo": "cliente",
+                "usuarioNome": customer.nome_fantasia,
+                "token": token
             }
+
         }
 
         const ticketAtendentes = await this.ticketAtendentesRepository.findByEmail(loginDtO.email)
         
         if (ticketAtendentes) {
             const isValidPwd = await bcrypt.compare(loginDtO.senha, ticketAtendentes.senha)
-            if (isValidPwd) {
-                const token = jwt.sign({
-                    id: ticketAtendentes.id_ticket_atendente,
-                    userType: UserTypeEnum.FITGROUP
-                }, process.env.JWT_SECRET)
+            if (!isValidPwd)  throw new Error("Senha inválida!")
 
-                return {
-                    "usuarioTipo": "fitgroup",
-                    "usuarioNome": ticketAtendentes.nome,
-                    "token": token
-                }
-            
-            } else {
-                return {
-                    "error": "Login falhou",
-                    "description": "Senha inválida!"
-                }
+            const token = jwt.sign({
+                id: ticketAtendentes.id_ticket_atendente,
+                userType: UserTypeEnum.FITGROUP
+            }, String(process.env.JWT_SECRET))
+
+            return {
+                "usuarioTipo": "fitgroup",
+                "usuarioNome": ticketAtendentes.nome,
+                "token": token
             }
         }
-        
-        return {
-            "error": "Login falhou",
-            "description": "Usuário não encontrado."
-        }
 
+        throw new Error("Usuário não encontrado.")
     }
 
 }    

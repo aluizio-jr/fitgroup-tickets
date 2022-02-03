@@ -10,13 +10,21 @@ export class CreateTicketMensagemController {
         const id_ticket = request.params.id_ticket
         const data = request.body 
         const { user, userType } = request 
-        const newTicket = await this.createTicketMensagemUseCase.execute({
-            ...data,
-            id_ticket: id_ticket,
-            tipo_usuario: userType,
-            id_responsavel: user
-        })
 
-        return response.json(newTicket)
+        try {
+            const newTicket = await this.createTicketMensagemUseCase.execute({
+                ...data,
+                id_ticket: id_ticket,
+                tipo_usuario: userType,
+                id_responsavel: user
+            })
+
+            return response.json(newTicket)
+            
+        } catch(error: any) {
+            return response.status(400).json({
+                message: error.message
+            })
+        }
     }
 }

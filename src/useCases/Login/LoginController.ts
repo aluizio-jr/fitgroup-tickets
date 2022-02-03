@@ -10,13 +10,13 @@ export class LoginController {
 
         const data = request.body
         try {
-
             const res = await this.loginUseCase.execute(data)
             return response.json(res)
 
         } catch(error: any) {
-            console.log(error.message)
-            return response.status(400).json(error)
+            return response.status(400).json({
+                message: error.message
+            })
         }
     }
 }
