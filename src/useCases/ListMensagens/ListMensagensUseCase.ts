@@ -22,7 +22,7 @@ export class ListMensagensUseCase {
        
             return ticketInfo
 
-        } catch (error) {
+        } catch (error: any) {
             throw error
         }
     }

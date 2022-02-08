@@ -11,7 +11,7 @@ export class ListAtendentesUseCase {
             const atendentes = await this.atendentesRepository.getAll()
             return atendentes
 
-        } catch (error) {
+        } catch (error: any) {
             throw error
         }
     }

@@ -16,7 +16,7 @@ export class ListCustomerUseCase {
             const customers = await this.customerRepository.getAll()
             return customers
 
-        } catch (error) {
+        } catch (error: any) {
             throw error
         }
     }

@@ -11,7 +11,7 @@ export class ListSistemasUseCase {
             const sistemas = await this.sistemasRepository.getAll()
             return sistemas
 
-        } catch (error) {
+        } catch (error: any) {
             throw error
         }
     }
