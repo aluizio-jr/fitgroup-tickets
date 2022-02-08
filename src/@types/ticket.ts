@@ -8,3 +8,5 @@ export interface TicketInfo extends Ticket {
     atendenteNome: string;
 
 }
+
+export type TicketFilter = "TODOS" | "ABERTOS" | "FECHADOS" | "RESPONDIDOS"

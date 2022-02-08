@@ -51,17 +51,27 @@ export class MysqlTicketRepository implements ITicketsRepository {
             m_ticket.data_abertura,
             m_ticket.titulo,
             m_ticket.responsavel_cliente,
-            m_ticket.data_fechamento
+            m_ticket.data_fechamento,
+            (SELECT
+                (CASE 
+                    WHEN m_ticket_mensagens.id_ticket_atendente IS NOT NULL THEN 'fitgroup'
+                    WHEN m_ticket_mensagens.responsavel_cliente IS NOT NULL THEN 'cliente'
+                END) 
+                FROM
+                m_ticket_mensagens
+                WHERE
+                m_ticket_mensagens.id_ticket = m_ticket.id_ticket
+                ORDER BY
+                m_ticket_mensagens.data_hora DESC
+                LIMIT 1
+            ) AS respondido
             FROM
             m_ticket
             WHERE id_ticket IS NOT NULL
-            ${ticketParams.id_ticket ? ` AND id_ticket = '${ticketParams.id_ticket}'` : ''}
-            ${ticketParams.id_cliente ? ` AND id_cliente = ${ticketParams.id_cliente}` : ''}
-            ${ticketParams.id_ticket_status ? ` AND id_ticket_status = ${ticketParams.id_ticket_status}` : ''}
-            ${ticketParams.id_ticket_tipo ? ` AND id_ticket_tipo = ${ticketParams.id_ticket_tipo}` : ''}
-            ${ticketParams.id_sistema ? ` AND id_sistema = ${ticketParams.id_sistema}` : ''}
-            ${ticketParams.id_ticket_atendente ? ` AND id_ticket_atendente = ${ticketParams.id_ticket_atendente}` : ''}
-            ${ticketParams.responsavel_cliente ? ` AND responsavel_cliente = '${ticketParams.responsavel_cliente}'` : ''}
+            ${ticketParams.tipo_usuario === "cliente" ? ` AND id_cliente = ${ticketParams.id_responsavel}` : ''}
+            ${ticketParams.filter === "ABERTOS" ? ` AND id_ticket_status IN (1,2)` : ''}
+            ${ticketParams.filter === "FECHADOS" ? ` AND id_ticket_status = 4` : ''}
+            ${ticketParams.filter === "RESPONDIDOS" ? ` AND id_ticket_status IN (1,2) HAVING respondido <> '${ticketParams.tipo_usuario}'` : ''}
             `
 
         const [rows] = await db.query(dbQuery)        

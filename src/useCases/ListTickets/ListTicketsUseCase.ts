@@ -1,7 +1,6 @@
-import { Ticket } from "../../entities/Ticket";
 import { IListTicketDTO } from "./ListTicketDTO";
 import { ITicketsRepository } from "../../repositories/ITicketsRepository";
-import { TicketInfo } from "../../@types/ticket"
+import { TicketFilter, TicketInfo } from "../../@types/ticket"
 import { ICustomerRepository } from "../../repositories/ICustomerRepository";
 
 
@@ -13,15 +12,14 @@ export class ListTicketUseCase {
     ) {}
 
     async execute(ticketParams: IListTicketDTO) { 
-        const{ id_responsavel, tipo_usuario, ...ticketFilters } = ticketParams
+        const{ id_responsavel, tipo_usuario, filter } = ticketParams
 
         try {
-            const idCliente = tipo_usuario === "cliente" ? id_responsavel : ticketFilters.id_cliente
             
-            const tickets = await this.ticketRepository.getTicket({
-                ...ticketFilters,
-                id_cliente: idCliente
-            })
+            const ticketFilters: TicketFilter[] = ["ABERTOS","FECHADOS","RESPONDIDOS","TODOS"]
+            if (!ticketFilters.includes(filter)) throw new Error('Filtro não elegível')
+
+            const tickets = await this.ticketRepository.getTicket(ticketParams)
 
             const ticketInfo: TicketInfo[] = await Promise.all(tickets.map(async ticket => {
                 const customer = await this.customerRepository.findById(ticket.id_cliente)
@@ -42,7 +40,7 @@ export class ListTicketUseCase {
 
             return ticketInfo
 
-        } catch (error) {
+        } catch (error: any) {
             return {erro: error.message }
         }
     }

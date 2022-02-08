@@ -11,7 +11,7 @@ export class ListTicketTiposUseCase {
             const sistemas = await this.ticketTiposRepository.getAll()
             return sistemas
 
-        } catch (error) {
+        } catch (error: any) {
             throw error
         }
     }

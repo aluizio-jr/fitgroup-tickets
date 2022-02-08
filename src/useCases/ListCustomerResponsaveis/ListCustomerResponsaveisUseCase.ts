@@ -12,7 +12,7 @@ export class ListCustomerResponsaveisUseCase {
             const customerResponsaveisString = customerResponsaveis.map((customerResponsavel)=>customerResponsavel.responsavel_cliente)
             return customerResponsaveisString
 
-        } catch (error) {
+        } catch (error: any) {
             throw error
         }
     }

@@ -19,6 +19,21 @@ export class MysqlAtendentesRepository implements IAtendentesRepository {
 
     }
 
+    async findById(id: number): Promise<TicketAtendente> {
+        const db = await connect()
+        const [rows] = await db.query (
+            `SELECT 
+            id_ticket_atendente,
+            nome,
+            email,
+            senha 
+            FROM c_ticket_atendentes 
+            WHERE c_ticket_atendentes.id_ticket_atendente = '${id}'`
+            )
+        return rows?rows[0] : null;
+
+    }
+
     async getAll(): Promise<TicketAtendente> {
         const db = await connect()
         const [rows] = await db.query (
