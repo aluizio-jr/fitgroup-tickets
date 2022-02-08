@@ -15,9 +15,8 @@ export class ListTicketUseCase {
         const{ id_responsavel, tipo_usuario, filter } = ticketParams
 
         try {
-            
-            const ticketFilters: TicketFilter[] = ["ABERTOS","FECHADOS","RESPONDIDOS","TODOS"]
-            if (!ticketFilters.includes(filter)) throw new Error('Filtro não elegível')
+            // const ticketFilters: TicketFilter[] = ["ABERTOS","FECHADOS","RESPONDIDOS","TODOS"]
+            // if (!ticketFilters.includes(filter)) throw new Error('Filtro não elegível')
 
             const tickets = await this.ticketRepository.getTicket(ticketParams)
 

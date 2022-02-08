@@ -2,6 +2,7 @@ import { connect } from "../../db";
 import { Ticket } from "../../entities/Ticket";
 import { IListTicketDTO } from "../../useCases/ListTickets/ListTicketDTO";
 import { ITicketsRepository } from "../ITicketsRepository";
+import { TicketFilter } from "../../@types/ticket"
 
 export class MysqlTicketRepository implements ITicketsRepository {
 
@@ -67,12 +68,20 @@ export class MysqlTicketRepository implements ITicketsRepository {
             ) AS respondido
             FROM
             m_ticket
-            WHERE id_ticket IS NOT NULL
-            ${ticketParams.tipo_usuario === "cliente" ? ` AND id_cliente = ${ticketParams.id_responsavel}` : ''}
-            ${ticketParams.filter === "ABERTOS" ? ` AND id_ticket_status IN (1,2)` : ''}
-            ${ticketParams.filter === "FECHADOS" ? ` AND id_ticket_status = 4` : ''}
-            ${ticketParams.filter === "RESPONDIDOS" ? ` AND id_ticket_status IN (1,2) HAVING respondido <> '${ticketParams.tipo_usuario}'` : ''}
-            `
+            WHERE id_ticket IS NOT NULL `
+
+            const ticketFilters: TicketFilter[] = ["ABERTOS","FECHADOS","RESPONDIDOS","TODOS"]
+            const isFilter = ticketFilters.includes(ticketParams.filter)
+
+            if (isFilter) {
+                dbQuery += `${ticketParams.tipo_usuario === "cliente" ? ` AND id_cliente = ${ticketParams.id_responsavel}` : ''}
+                ${ticketParams.filter === "ABERTOS" ? ` AND id_ticket_status IN (1,2)` : ''}
+                ${ticketParams.filter === "FECHADOS" ? ` AND id_ticket_status = 4` : ''}
+                ${ticketParams.filter === "RESPONDIDOS" ? ` AND id_ticket_status IN (1,2) HAVING respondido <> '${ticketParams.tipo_usuario}'` : ''}
+                `
+            } else {
+                dbQuery += ` AND m_ticket.id_ticket = '${ticketParams.filter}'`
+            }
 
         const [rows] = await db.query(dbQuery)        
         return rows
