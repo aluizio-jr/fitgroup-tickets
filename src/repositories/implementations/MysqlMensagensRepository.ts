@@ -52,7 +52,7 @@ export class MysqlMensagensRepository implements ITicketMensagensRepository {
         m_ticket_mensagens.id_ticket_mensagem,
         m_ticket_mensagens.id_ticket_atendente,
         m_ticket_mensagens.responsavel_cliente,
-        m_ticket_mensagens.data_hora,
+        DATE_FORMAT(m_ticket_mensagens.data_hora, '%Y-%m-%d %h:%i:%s') AS data_hora,
         m_ticket_mensagens.mensagem,
         m_ticket_mensagens.interna,
         m_ticket_mensagens.lida

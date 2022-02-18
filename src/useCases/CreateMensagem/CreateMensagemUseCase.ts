@@ -2,16 +2,19 @@ import { TicketMensagens } from "../../entities/Mensagens";
 import { ICreateTicketMensagemRequestDTO } from "./CreateMensagemDTO";
 import { ITicketMensagensRepository } from "../../repositories/IMensagensRepository";
 import { IMailProvider } from "../../providers/IMailProvider";
+import { MensagemAnexo } from "../../entities/MensagemAnexo";
+import { IMensagemAnexoRepository } from "../../repositories/IMensagemAnexoRepository";
 
 export class CreateTicketMensagemUseCase {
     constructor(
         private ticketMensagemRepository: ITicketMensagensRepository,
+        private mensagemAnexoRepository: IMensagemAnexoRepository,
         private mailProvider: IMailProvider,
     ) {}
 
     async execute(data: ICreateTicketMensagemRequestDTO) {
         try {
-            const{ id_responsavel, tipo_usuario, ...mensagemData } = data
+            const{ id_responsavel, tipo_usuario, file, ...mensagemData } = data
 
             if (!mensagemData.id_ticket) throw new Error('ID do ticket obrigatório.')
             if (tipo_usuario === "cliente" && !mensagemData.responsavel_cliente) throw new Error('Informe o responsável pela mensagem do Ticket.')
@@ -25,6 +28,17 @@ export class CreateTicketMensagemUseCase {
             });
 
             const newTicketMensagem = await this.ticketMensagemRepository.create(ticketMensagem);
+
+            if (file) {
+                const mensagemAnexo = new MensagemAnexo({
+                    id_ticket_mensagem: ticketMensagem.id_ticket_mensagem, 
+                    arquivo_nome: file.filename, 
+                    arquivo_original: file.originalname
+                });
+
+                await this.mensagemAnexoRepository.create(mensagemAnexo);
+            }
+
             return newTicketMensagem
 
             //const customer = await this.customerRepository.findById(data.id_cliente)

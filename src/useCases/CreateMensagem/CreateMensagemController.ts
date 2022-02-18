@@ -9,17 +9,18 @@ export class CreateTicketMensagemController {
     async handle(request: Request, response: Response) {
         const id_ticket = request.params.id_ticket
         const data = request.body 
-        const { user, userType } = request 
-
+        const { user, userType, file } = request 
+ 
         try {
-            const newTicket = await this.createTicketMensagemUseCase.execute({
+            const newMessage = await this.createTicketMensagemUseCase.execute({
                 ...data,
                 id_ticket: id_ticket,
                 tipo_usuario: userType,
-                id_responsavel: user
+                id_responsavel: user,
+                file
             })
 
-            return response.json(newTicket)
+            return response.json(newMessage)
             
         } catch(error: any) {
             return response.status(400).json({

@@ -33,7 +33,7 @@ export class ListTicketUseCase {
                     tipoDescricao: tipo,
                     nomeFantasia: customer.nome_fantasia,
                     sistemaNome: sistema,
-                    atendenteNome: atendente                    
+                    atendenteNome: atendente              
                 }
             }))
 

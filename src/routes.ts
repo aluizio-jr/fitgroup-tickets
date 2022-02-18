@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt"
 import { Router } from "express";
+import Multer from "multer";
+import { multerConfig }  from "./config/multer"
 
 import { listCustumerController } from "./useCases/ListCustomer";
 import { createTicketController } from "./useCases/CreateTicket";
@@ -17,6 +19,7 @@ import { listAtendentesController } from "./useCases/ListAtendentes";
 import { getUserInfoController } from "./useCases/GetUserInfo";
 
 const router = Router()
+const multer = Multer()
 
 router.post('/login', (request, response) => loginController.handle(request, response))
 
@@ -31,7 +34,7 @@ router.get('/tickets/:filter', auth, (request,response) => listTicketController.
 router.post('/ticket/create', auth, (request, response) => createTicketController.handle(request, response))
 
 router.get('/mensagens/:id_ticket', auth, (request, response) => listMensagensController.handle(request, response))
-router.post('/mensagem/:id_ticket/create', auth, (request, response) => createTicketMensagemController.handle(request, response))
+router.post('/mensagem/:id_ticket/create', auth, Multer(multerConfig).single('file'), (request, response) => createTicketMensagemController.handle(request, response))
 router.post('/ticket/mensagem/update', auth, (request, response) => updateTicketMensagemController.handle(request, response))
 
 router.get('/atendentes', auth, (request, response) => listAtendentesController.handle(request, response))

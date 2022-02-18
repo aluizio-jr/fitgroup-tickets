@@ -7,4 +7,5 @@ export interface ICreateTicketMensagemRequestDTO {
     responsavel_cliente: string | null;
     mensagem: string;
     interna: 0 | 1;
+    file?: Express.Multer.File
 }
