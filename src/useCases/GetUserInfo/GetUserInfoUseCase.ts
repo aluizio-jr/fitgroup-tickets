@@ -13,8 +13,8 @@ export class GetUserInfoUseCase {
             if (userType === "cliente") {
                 const customer = await this.customerRepository.findById(id)
                 return {
-                    nome: customer.nome_fantasia,
-                    tipo: userType
+                    name: customer.nome_fantasia,
+                    type: userType
                 }
             }
 
