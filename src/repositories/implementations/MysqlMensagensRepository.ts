@@ -82,6 +82,6 @@ export class MysqlMensagensRepository implements ITicketMensagensRepository {
 
         const [rows] = await db.query(dbQuery)        
 
-        return rows
+        return rows?.[0]
     }      
 }

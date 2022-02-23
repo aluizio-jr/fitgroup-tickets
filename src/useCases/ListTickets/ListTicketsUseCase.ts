@@ -27,7 +27,7 @@ export class ListTicketUseCase {
 
                 return {
                     ...ticket, 
-                    statusDescricao:status, 
+                    statusDescricao: status, 
                     tipoDescricao: tipo,
                     nomeFantasia: customer.nome_fantasia,
                     sistemaNome: sistema,
