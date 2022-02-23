@@ -12,14 +12,15 @@ export class ListMensagensUseCase {
         try {
             const ticketMensagens = await this.ticketMensagensRepository.getTicketMensagens(id_ticket)
             const ticketInfo: TicketMensagensInfo[] = await Promise.all(ticketMensagens.map(async ticket => {
-                const atendente = await this.ticketMensagensRepository.getAtendente(ticket.id_ticket_mensagem)
+                const mensagemUsuario = await this.ticketMensagensRepository.getResponsavel(ticket.id_ticket_mensagem)
 
                 return {
                     ...ticket, 
-                    atendenteNome: atendente?atendente:null                   
+                    userType: mensagemUsuario.userType,
+                    userName: mensagemUsuario.userName
                 }
             }))
-       
+
             return ticketInfo
 
         } catch (error: any) {

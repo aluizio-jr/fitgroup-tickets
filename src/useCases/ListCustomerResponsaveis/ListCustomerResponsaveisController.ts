@@ -7,10 +7,10 @@ export class ListCustomerResponsaveisController {
     ) {}
 
     async handle(request: Request, response: Response) {
-        const id = request.params.id
+        const { user } = request;
 
         try {
-            const res = await this.listCustomerResponsaveisUseCase.execute({ id_cliente: Number(id) })
+            const res = await this.listCustomerResponsaveisUseCase.execute({ id_cliente: user })
             return response.json(res)
 
         } catch(error: any) {

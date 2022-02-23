@@ -1,3 +1,5 @@
+import { IMensagemUser } from "../../@types/mensagemUser";
+import { IUserTypes } from "../../@types/userTypes";
 import { connect } from "../../db";
 import { TicketMensagens } from "../../entities/Mensagens";
 import { ITicketMensagensRepository } from "../IMensagensRepository";
@@ -51,13 +53,13 @@ export class MysqlMensagensRepository implements ITicketMensagensRepository {
         m_ticket_mensagens.id_ticket,
         m_ticket_mensagens.id_ticket_mensagem,
         m_ticket_mensagens.id_ticket_atendente,
-        m_ticket_mensagens.responsavel_cliente,
         DATE_FORMAT(m_ticket_mensagens.data_hora, '%Y-%m-%d %h:%i:%s') AS data_hora,
         m_ticket_mensagens.mensagem,
         m_ticket_mensagens.interna,
         m_ticket_mensagens.lida
         FROM
         m_ticket_mensagens
+        LEFT OUTER JOIN c_ticket_atendentes ON m_ticket_mensagens.id_ticket_atendente = c_ticket_atendentes.id_ticket_atendente
         WHERE
         m_ticket_mensagens.id_ticket = '${id_ticket}'
         ORDER BY m_ticket_mensagens.data_hora`
@@ -66,19 +68,20 @@ export class MysqlMensagensRepository implements ITicketMensagensRepository {
         return rows
     }
 
-    async getAtendente(id_ticket_mensagem: string): Promise<string> {
+    async getResponsavel(id_ticket_mensagem: string): Promise<IMensagemUser> {
         const db = await connect()
         let dbQuery: string
         dbQuery = `SELECT
-        c_ticket_atendentes.nome
+        IF(m_ticket_mensagens.id_ticket_atendente IS NOT NULL, 'fitgroup', 'cliente') AS userType,
+        IFNULL(m_ticket_mensagens.responsavel_cliente, c_ticket_atendentes.nome) AS userName
         FROM
         m_ticket_mensagens
-        INNER JOIN c_ticket_atendentes ON m_ticket_mensagens.id_ticket_atendente = c_ticket_atendentes.id_ticket_atendente
+        LEFT OUTER JOIN c_ticket_atendentes ON m_ticket_mensagens.id_ticket_atendente = c_ticket_atendentes.id_ticket_atendente
         WHERE
         m_ticket_mensagens.id_ticket_mensagem = '${id_ticket_mensagem}'`
 
         const [rows] = await db.query(dbQuery)        
 
-        return rows[0]?.nome
+        return rows
     }      
 }

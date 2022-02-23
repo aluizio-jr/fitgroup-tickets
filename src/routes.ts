@@ -24,7 +24,7 @@ const multer = Multer()
 router.post('/login', (request, response) => loginController.handle(request, response))
 
 router.get('/customer/:id?', auth, (request, response) => listCustumerController.handle(request, response))
-router.get('/customer/:id?/responsaveis', auth, (request, response) => listCustumerResponsaveisController.handle(request, response))
+router.get('/customer/responsaveis', auth, (request, response) => listCustumerResponsaveisController.handle(request, response))
 
 router.get('/ticket_tipos',auth, (request,response) => listTicketTipoController.handle(request, response) )
 router.get('/sistemas', auth, (request, response) => listSistemasController.handle(request, response))
