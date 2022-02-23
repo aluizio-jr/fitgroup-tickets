@@ -13,7 +13,6 @@ export class ListMensagensUseCase {
             const ticketMensagens = await this.ticketMensagensRepository.getTicketMensagens(id_ticket)
             const ticketInfo: TicketMensagensInfo[] = await Promise.all(ticketMensagens.map(async mensagem => {
                 const mensagemUsuario = await this.ticketMensagensRepository.getResponsavel(mensagem.id_ticket_mensagem)
-console.log(mensagemUsuario);
 
                 return {
                     ...mensagem, 
