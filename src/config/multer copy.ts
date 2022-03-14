@@ -5,13 +5,7 @@ import crypto from "crypto"
 
 export const multerConfig: Options = {
     dest: path.resolve(__dirname, "..", "tmp", "uploads") ,
-    storage: sftpStorage({
-        sftp: {
-            host: String(process.env.FTP_HOST),
-            port: 22,
-            username: String(process.env.FTP_USER_NAME),
-            password: String(process.env.FTP_PASSWORD)
-        },
+    storage: multer.diskStorage({
         destination: (req, file, cb) => {
             cb(null, path.resolve(__dirname, "..", "tmp", "uploads"))
         },
