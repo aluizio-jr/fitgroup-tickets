@@ -1,15 +1,13 @@
 import { TicketMensagens } from "../../entities/Mensagens";
 import { ICreateTicketMensagemRequestDTO } from "./CreateMensagemDTO";
 import { ITicketMensagensRepository } from "../../repositories/IMensagensRepository";
-import { IMailProvider } from "../../providers/IMailProvider";
 import { MensagemAnexo } from "../../entities/MensagemAnexo";
 import { IMensagemAnexoRepository } from "../../repositories/IMensagemAnexoRepository";
 
 export class CreateTicketMensagemUseCase {
     constructor(
         private ticketMensagemRepository: ITicketMensagensRepository,
-        private mensagemAnexoRepository: IMensagemAnexoRepository,
-        private mailProvider: IMailProvider,
+        private mensagemAnexoRepository: IMensagemAnexoRepository
     ) {}
 
     async execute(data: ICreateTicketMensagemRequestDTO) {
