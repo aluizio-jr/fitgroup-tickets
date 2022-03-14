@@ -4,7 +4,7 @@ import path from "path"
 import crypto from "crypto"
 
 export const multerConfig: Options = {
-    dest: String(process.env.FTP_ANEXO_PATH),
+    dest: path.resolve(__dirname, "..", "tmp", "uploads") ,
     storage: sftpStorage({
         sftp: {
             host: String(process.env.FTP_HOST),
@@ -13,7 +13,7 @@ export const multerConfig: Options = {
             password: String(process.env.FTP_PASSWORD)
         },
         destination: (req, file, cb) => {
-            cb(null, String(process.env.FTP_ANEXO_PATH))
+            cb(null, path.resolve(__dirname, "..", "tmp", "uploads"))
         },
         filename: (req, file, cb) => {
             crypto.randomBytes(16, (err, hash) => {
