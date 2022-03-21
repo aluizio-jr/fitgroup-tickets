@@ -9,7 +9,7 @@ export class CreateTicketMensagemController {
     async handle(request: Request, response: Response) {
         const id_ticket = request.params.id_ticket
         const data = request.body 
-        const { user, userType, file } = request 
+        const { user, userType, file } = request;
  
         try {
             const newMessage = await this.createTicketMensagemUseCase.execute({

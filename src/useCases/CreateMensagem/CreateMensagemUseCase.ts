@@ -1,3 +1,4 @@
+
 import { TicketMensagens } from "../../entities/Mensagens";
 import { ICreateTicketMensagemRequestDTO } from "./CreateMensagemDTO";
 import { ITicketMensagensRepository } from "../../repositories/IMensagensRepository";
@@ -12,7 +13,7 @@ export class CreateTicketMensagemUseCase {
 
     async execute(data: ICreateTicketMensagemRequestDTO) {
         try {
-            const{ id_responsavel, tipo_usuario, file, ...mensagemData } = data
+            const { id_responsavel, tipo_usuario, file, ...mensagemData } = data;
 
             if (!mensagemData.id_ticket) throw new Error('ID do ticket obrigatório.')
             if (tipo_usuario === "cliente" && !mensagemData.responsavel_cliente) throw new Error('Informe o responsável pela mensagem do Ticket.')
@@ -30,29 +31,14 @@ export class CreateTicketMensagemUseCase {
             if (file) {
                 const mensagemAnexo = new MensagemAnexo({
                     id_ticket_mensagem: ticketMensagem.id_ticket_mensagem, 
-                    arquivo_nome: file.filename, 
-                    arquivo_original: file.originalname
+                    arquivo_original: file.originalname,
+                    arquivo_url: file.location
                 });
-
+                
                 await this.mensagemAnexoRepository.create(mensagemAnexo);
             }
 
-            return newTicketMensagem
-
-            //const customer = await this.customerRepository.findById(data.id_cliente)
-
-            // this.mailProvider.sendMail({
-            //     to: {
-            //         name: customer.nome_fantasia,
-            //         email: customer.email_geral
-            //     },
-            //     from: {
-            //         name: 'Suporte Fitgroup',
-            //         email: 'suporte@fitgroup.com.br'
-            //     },
-            //     subject: 'Essa é uma mensagem de confirmacao',
-            //     body: '<p>Nova interação no seu Ticket</p>'
-            // })
+            return newTicketMensagem;
 
         } catch(error: any) {
             return {erro: error.message }

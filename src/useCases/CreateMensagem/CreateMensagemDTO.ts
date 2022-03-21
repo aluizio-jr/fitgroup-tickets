@@ -1,3 +1,6 @@
+import { IFile } from "../../@types/file";
+
+// import { IFile } from "../../middlewares/fileUpload/dtos";
 import { IUserTypes } from "../../@types/userTypes"
 
 export interface ICreateTicketMensagemRequestDTO {
@@ -7,5 +10,5 @@ export interface ICreateTicketMensagemRequestDTO {
     responsavel_cliente: string | null;
     mensagem: string;
     interna: 0 | 1;
-    file?: Express.Multer.File
+    file?: IFile;
 }
